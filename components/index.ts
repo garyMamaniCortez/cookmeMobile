@@ -1,0 +1,1 @@
+export { default as ThemedText, ThemedTextProps } from './ThemedText/ThemedText'
