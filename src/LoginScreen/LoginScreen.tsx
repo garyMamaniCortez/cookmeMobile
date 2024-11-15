@@ -16,6 +16,10 @@ const LoginScreen: React.FC = () => {
       <Text style={styles.label}>CONTRASEÑA</Text>
       <TextInput style={styles.input} placeholder="Ingrese su contraseña" secureTextEntry />
 
+      <TouchableOpacity style={styles.loginButton}>
+        <Text style={styles.loginButtonText}>Ingresar</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity>
         <Text style={styles.forgotPassword}>OLVIDE LA CONTRASEÑA</Text>
       </TouchableOpacity>
