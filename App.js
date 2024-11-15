@@ -1,10 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text style={styles.title}>COOKME</Text>
+      <Image source={require('./assets/mouse.jpg')} style={styles.image} />
+      
+      <Text style={styles.label}>USUARIO</Text>
+      <TextInput style={styles.input} placeholder="Ingrese su usuario" />
+
+      <Text style={styles.label}>CONTRASEÑA</Text>
+      <TextInput style={styles.input} placeholder="Ingrese su contraseña" secureTextEntry />
+
+      <TouchableOpacity>
+        <Text style={styles.forgotPassword}>OLVIDE LA CONTRASEÑA</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity>
+        <Text style={styles.register}>Registrarse</Text>
+      </TouchableOpacity>
+      
       <StatusBar style="auto" />
     </View>
   );
@@ -13,8 +30,45 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FF7F00',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 28,             
+    fontWeight: 'bold',
+    marginBottom: 20,         
+  },
+  image: {
+    width: 200,               
+    height: 200,              
+    borderRadius: 100,        
+    marginBottom: 20,         
+  },
+  label: {
+    alignSelf: 'flex-start',
+    marginLeft: 30,
+    fontSize: 16,
+    color: '#000',
+  },
+  input: {
+    width: '80%',
+    height: 40,
+    backgroundColor: '#D3D3D3',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+  },
+  forgotPassword: {
+    color: 'blue',
+    fontSize: 14,
+    marginTop: 10,
+  },
+  register: {
+    color: 'blue',
+    fontSize: 16,
+    marginTop: 5,
+    textDecorationLine: 'underline',
   },
 });
