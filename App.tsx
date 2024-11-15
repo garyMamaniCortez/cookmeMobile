@@ -13,9 +13,9 @@ export default function App() {
         initialRouteName='Login'
         screenOptions={{ headerShown: false, tabBarButton: () => null }}
       >
-        <Tab.Screen name='Login' component={LoginScreen}/>
+        <Tab.Screen name='Login' component={LoginScreen} />
       </Tab.Navigator>
-      <Navbar/>
+      <Navbar />
     </NavigationContainer>
   );
 }

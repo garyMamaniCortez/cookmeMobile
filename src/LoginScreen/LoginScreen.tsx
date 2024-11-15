@@ -7,7 +7,7 @@ const LoginScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>COOKME</Text>
-      <Image source={require('./assets/mouse.jpg')} style={styles.image} />
+      <Image source={require('@/assets/mouse.jpg')} style={styles.image} />
       
       <Text style={styles.label}>USUARIO</Text>
       <TextInput style={styles.input} placeholder="Ingrese su usuario" />
