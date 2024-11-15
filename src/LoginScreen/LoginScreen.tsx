@@ -6,6 +6,7 @@ import styles from './styles';
 const LoginScreen: React.FC = () => {
   return (
     <View style={styles.container}>
+      <StatusBar style="light" backgroundColor="transparent" translucent />
       <Text style={styles.title}>COOKME</Text>
       <Image source={require('@/assets/mouse.jpg')} style={styles.image} />
       

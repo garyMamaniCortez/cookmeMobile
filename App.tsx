@@ -11,7 +11,11 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName='Login'
-        screenOptions={{ headerShown: false, tabBarButton: () => null }}
+        screenOptions={{
+          headerShown: false,
+          tabBarButton: () => null,
+          tabBarStyle: { display: 'none' },
+        }}
       >
         <Tab.Screen name='Login' component={LoginScreen} />
       </Tab.Navigator>
