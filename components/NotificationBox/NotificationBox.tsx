@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import styles from './styles';
 import { CommentBoxProps } from '@/interfaces/CommentBoxProps';
 
-const CommentBox: React.FC<CommentBoxProps> = ({ username, comment }) => {
+const NotificationBox: React.FC<CommentBoxProps> = ({ username, comment }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.username}>{username}:</Text>
@@ -12,4 +12,4 @@ const CommentBox: React.FC<CommentBoxProps> = ({ username, comment }) => {
     );
 };
 
-export default CommentBox;
+export default NotificationBox;
