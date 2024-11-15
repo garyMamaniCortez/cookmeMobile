@@ -15,7 +15,6 @@ export default function App() {
       >
         <Tab.Screen name='Login' component={LoginScreen} />
       </Tab.Navigator>
-      <Navbar />
     </NavigationContainer>
   );
 }
