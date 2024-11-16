@@ -1,12 +1,17 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { FontAwesome, MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import styles from './styles';
+import { Navbar } from '@/components';
 
 const ProfileScreen: React.FC = () => {
   return (
-    <View style={styles.container}>
-      
+    <LinearGradient
+        colors={['transparent', '#7B0D44']}
+        style={styles.background}
+    >
+
       {/* Imagen de perfil */}
       <View style={styles.avatarContainer}>
         <Image 
@@ -17,16 +22,18 @@ const ProfileScreen: React.FC = () => {
 
       {/* Nombre de usuario */}
       <View style={styles.usernameContainer}>
-        <Text style={styles.username}>NombreUsuario</Text>
         <TouchableOpacity>
-          <MaterialIcons name="edit" size={16} color="#555" />
+          <Text style={styles.username}>
+            Nombre Usuario
+            <MaterialIcons name="edit" size={20} color="#1D1B20" />
+          </Text>
         </TouchableOpacity>
       </View>
 
       {/* Cuadrícula de botones */}
       <View style={styles.grid}>
         <TouchableOpacity style={styles.gridItem}>
-          <FontAwesome name="heart" size={32} color="#333" />
+          <Ionicons name="heart" size={32} color="1D1B20" />
           <Text 
             style={styles.gridText} 
             adjustsFontSizeToFit 
@@ -37,7 +44,7 @@ const ProfileScreen: React.FC = () => {
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.gridItem}>
-          <FontAwesome name="bookmark" size={32} color="#333" />
+          <Ionicons name="bookmark" size={32} color="1D1B20" />
           <Text 
             style={styles.gridText} 
             adjustsFontSizeToFit 
@@ -48,7 +55,7 @@ const ProfileScreen: React.FC = () => {
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.gridItem}>
-          <MaterialIcons name="restaurant-menu" size={32} color="#333" />
+          <MaterialIcons name="restaurant-menu" size={32} color="#1D1B20" />
           <Text 
             style={styles.gridText} 
             adjustsFontSizeToFit 
@@ -59,7 +66,7 @@ const ProfileScreen: React.FC = () => {
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.gridItem}>
-          <Ionicons name="settings" size={32} color="#333" />
+          <Ionicons name="settings" size={32} color="#1D1B20" />
           <Text 
             style={styles.gridText} 
             adjustsFontSizeToFit 
@@ -68,25 +75,12 @@ const ProfileScreen: React.FC = () => {
             Configuración
           </Text>
         </TouchableOpacity>
-    </View>
-
-
-      {/* Barra de navegación inferior */}
-      <View style={styles.navigation}>
-        <TouchableOpacity>
-          <Ionicons name="home-outline" size={28} color="#333" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="search-outline" size={28} color="#333" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="notifications-outline" size={28} color="#333" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="person-circle-outline" size={28} color="#7B0D44" />
-        </TouchableOpacity>
       </View>
-    </View>
+      
+      {/* Barra de navegación inferior */}
+      <Navbar />
+    </LinearGradient>
+
   );
 };
 

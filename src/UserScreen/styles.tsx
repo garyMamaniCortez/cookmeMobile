@@ -1,24 +1,24 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: '#7B0D44',
-    alignItems: 'center'
+    height: 300,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatarContainer: {
-    backgroundColor: '#E1BEE7',
     borderRadius: 90,
-    width: 180,
-    height: 180,
+    width: 200,
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 80,
     marginBottom: 30,
   },
   avatar: {
-    width: 150,
-    height: 150,
+    width: 160,
+    height: 160,
     borderRadius: 75,
   },
   usernameContainer: {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#FFF',
+    color: '#FFFBF7',
     textAlign: 'center', // Asegura que siempre esté centrado
   },
   grid: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   gridItem: {
     width: '40%', // Ajusta el tamaño del cuadro
     height: '35%',
-    backgroundColor: '#F8BBD0',
+    backgroundColor: '#FFFBF7',
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
@@ -55,24 +55,11 @@ const styles = StyleSheet.create({
   },
   gridText: {
     fontSize: 16, // Tamaño base del texto
-    color: '#333',
+    color: '#1D1B20',
     marginTop: 15,
     textAlign: 'center',
     textTransform: 'capitalize', // Opcional: formatea el texto para una presentación limpia
   },
-  navigation: {
-    flexDirection: 'row',
-    justifyContent: 'space-between', // Se ajusta para distribuir los botones equitativamente
-    width: '100%', // Ocupa el 100% del ancho de la pantalla
-    position: 'absolute', // Fija la posición en la parte inferior
-    bottom: 0, // Se pega al borde inferior
-    left: 0, // Se pega al borde izquierdo
-    right: 0, // Se pega al borde derecho
-    backgroundColor: '#FFF',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#DDD',
-  }
 });
 
 export default styles;
