@@ -10,7 +10,7 @@ const ProfileScreen: React.FC = () => {
       {/* Imagen de perfil */}
       <View style={styles.avatarContainer}>
         <Image 
-          source={require('@/assets/icon.png')} 
+          source={require('@/assets/mouse.jpg')} 
           style={styles.avatar} 
         />
       </View>
@@ -27,24 +27,49 @@ const ProfileScreen: React.FC = () => {
       <View style={styles.grid}>
         <TouchableOpacity style={styles.gridItem}>
           <FontAwesome name="heart" size={32} color="#333" />
-          <Text style={styles.gridText}>Favoritos</Text>
+          <Text 
+            style={styles.gridText} 
+            adjustsFontSizeToFit 
+            numberOfLines={1}
+          >
+            Favoritos
+          </Text>
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.gridItem}>
           <FontAwesome name="bookmark" size={32} color="#333" />
-          <Text style={styles.gridText}>Guardados</Text>
+          <Text 
+            style={styles.gridText} 
+            adjustsFontSizeToFit 
+            numberOfLines={1}
+          >
+            Guardados
+          </Text>
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.gridItem}>
           <MaterialIcons name="restaurant-menu" size={32} color="#333" />
-          <Text style={styles.gridText}>Mis Recetas</Text>
+          <Text 
+            style={styles.gridText} 
+            adjustsFontSizeToFit 
+            numberOfLines={1}
+          >
+            Mis Recetas
+          </Text>
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.gridItem}>
           <Ionicons name="settings" size={32} color="#333" />
-          <Text style={styles.gridText}>Configuración</Text>
+          <Text 
+            style={styles.gridText} 
+            adjustsFontSizeToFit 
+            numberOfLines={1}
+          >
+            Configuración
+          </Text>
         </TouchableOpacity>
-      </View>
+    </View>
+
 
       {/* Barra de navegación inferior */}
       <View style={styles.navigation}>
