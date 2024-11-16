@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   avatarContainer: {
     backgroundColor: '#E1BEE7',
     borderRadius: 90,
-    width: 180,
+    width: 180  ,
     height: 180,
     justifyContent: 'center',
     alignItems: 'center',
