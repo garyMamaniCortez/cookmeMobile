@@ -4,8 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#7B0D44',
-    alignItems: 'center',
-    padding: 20,
+    alignItems: 'center'
   },
   avatarContainer: {
     backgroundColor: '#E1BEE7',
@@ -38,13 +37,13 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between', // Cambiar a flex-start para quitar el espacio extra
     width: '90%',
     marginTop: 10,
     marginBottom: 20,
   },
   gridItem: {
-    width: '43%', // Ajusta el tamaño del cuadro
+    width: '40%', // Ajusta el tamaño del cuadro
     height: '35%',
     backgroundColor: '#F8BBD0',
     borderRadius: 15,
@@ -52,6 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 22,
     marginVertical: 15,
+    marginHorizontal: '2%', // Añade un pequeño margen horizontal para separar ligeramente los cuadros
   },
   gridText: {
     fontSize: 16, // Tamaño base del texto
@@ -62,15 +62,17 @@ const styles = StyleSheet.create({
   },
   navigation: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    position: 'absolute',
-    bottom: 20,
+    justifyContent: 'space-between', // Se ajusta para distribuir los botones equitativamente
+    width: '100%', // Ocupa el 100% del ancho de la pantalla
+    position: 'absolute', // Fija la posición en la parte inferior
+    bottom: 0, // Se pega al borde inferior
+    left: 0, // Se pega al borde izquierdo
+    right: 0, // Se pega al borde derecho
     backgroundColor: '#FFF',
     paddingVertical: 10,
     borderTopWidth: 1,
     borderTopColor: '#DDD',
-  },
+  }
 });
 
 export default styles;

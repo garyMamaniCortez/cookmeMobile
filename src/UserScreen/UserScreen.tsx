@@ -83,7 +83,7 @@ const ProfileScreen: React.FC = () => {
           <Ionicons name="notifications-outline" size={28} color="#333" />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Ionicons name="person-circle-outline" size={28} color="#FF007F" />
+          <Ionicons name="person-circle-outline" size={28} color="#7B0D44" />
         </TouchableOpacity>
       </View>
     </View>
