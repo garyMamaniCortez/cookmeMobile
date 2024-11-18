@@ -16,9 +16,10 @@ export default function App() {
           tabBarStyle: { display: 'none' },
         }}
       >
-        <Tab.Screen name='Login' component={LoginScreen} />
+        
         <Tab.Screen name='Recipe' component={RecipeScreen} />
         <Tab.Screen name='Message' component={MessageScreen} />
+        <Tab.Screen name='Login' component={LoginScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
