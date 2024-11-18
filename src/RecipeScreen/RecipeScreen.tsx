@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -10,18 +10,25 @@ const RecipeScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
         <StatusBar style="dark" backgroundColor="transparent" translucent={false} />
+        
         {/* Header */}
         <View style={styles.header}>
             <TouchableOpacity>
                 <Ionicons name="return-down-back" size={24} color="black" />
             </TouchableOpacity>
             <Text style={styles.title}>Tacos al Pastor</Text>
-            <View style={styles.headerIcons}>
+            
+            {/* Botón de favoritos */}
+            <TouchableOpacity>
                 <Ionicons name="bookmark-outline" size={24} color="black" />
-            </View>
+            </TouchableOpacity>
         </View>
 
-        <MaterialIcons name="add-comment" size={24} color="black" />
+        {/* Icono de mensaje como botón */}
+        <TouchableOpacity>
+            <MaterialIcons name="add-comment" size={24} color="black" />
+        </TouchableOpacity>
+
         {/* Subheader */}
         <View style={styles.subHeader}>
             <Text style={styles.subtitle}>Por: MexiK047</Text>
@@ -66,3 +73,4 @@ const RecipeScreen: React.FC = () => {
 };
 
 export default RecipeScreen;
+
