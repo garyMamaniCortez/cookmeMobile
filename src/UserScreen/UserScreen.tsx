@@ -11,14 +11,10 @@ const ProfileScreen: React.FC = () => {
 
   const { usuario, error } = useUsuario(1);
   const [ user, setUser ] = useState<UsuarioResponse| null>(null);
-  const [isEditing, setIsEditing] = useState(false);
   const [editedUsername, setEditedUsername] = useState('');
   useEffect(() => {
     setUser(usuario);
   })
-  const handleEditName = () => {
-    setIsEditing(true);
-  };
 
   const handleSaveName = async () => {
     // Update the usuario object with the edited username
@@ -27,8 +23,6 @@ const ProfileScreen: React.FC = () => {
     // Call useUpdateUsuario to update the database
     const {usuario, error } = await useUpdateUsuario(updatedUsuario.id_usuario, usuarioResquest);
     setUser(usuario);
-
-    setIsEditing(false);
   };
 
   if(user){
@@ -48,7 +42,6 @@ const ProfileScreen: React.FC = () => {
   
         {/* Nombre de usuario */}
         <View style={styles.usernameContainer}>
-          {isEditing ? (
             <TextInput
               style={styles.username}
               value={editedUsername}
@@ -56,14 +49,7 @@ const ProfileScreen: React.FC = () => {
               onSubmitEditing={handleSaveName}
               placeholder={user.nombre_usuario}
             />
-          ) : (
-            <TouchableOpacity onPress={ handleEditName }>
-              <Text style={styles.username}>
-                {user.nombre_usuario}
-                <MaterialIcons name="edit" size={20} color="#1D1B20" />
-              </Text>
-            </TouchableOpacity>
-          )}
+            <MaterialIcons name="edit" size={20} color="#1D1B20" />
         </View>
   
         {/* Cuadrícula de botones */}
