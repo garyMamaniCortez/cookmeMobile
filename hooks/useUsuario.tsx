@@ -1,71 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import { getUsuario, getUsuarios, putUsuario } from '@/api/Usuario';
+import { getUsuario, getUsuarios, postUsuario, putUsuario } from '@/api/Usuario';
 import { UsuarioRequest, UsuarioResponse } from '@/interfaces/api/User';
+import { useDataLoader, useDataUploader } from './useData';
 
-export const useUsuario = (id: number): { usuario: UsuarioResponse | null; error?: string } => {
-  const [usuario, setUsuario] = useState<UsuarioResponse | null>(null);
-  const [error, setError] = useState<string | undefined>();
+export const useUsuario = (id: number) =>
+  useDataLoader<UsuarioResponse>(() => getUsuario(id), [id]);
 
-  const cargarUsuario = async () => {
-    try {
-      const usuarioResponse = await getUsuario(id);
-      if (usuarioResponse) {
-        setUsuario(usuarioResponse);
-        setError(undefined);
-      } else {
-        setError("Usuario no encontrado");
-      }
-    } catch (err) {
-      setError("Error al cargar el usuario");
-      console.error("Error en cargarUsuario:", err);
-    }
-  };
+export const useUsuarios = () =>
+  useDataLoader<UsuarioResponse[]>(() => getUsuarios(), []);
 
-  useEffect(() => {
-    cargarUsuario();
-  }, [id]);
-
-  return { usuario, error };
+export const useUpdateUsuario = async (
+  id: number,
+  updatedUsuario: UsuarioRequest
+): Promise<{ usuario: UsuarioResponse | null; error?: string }> => {
+  return useDataUploader(
+    () => putUsuario(id, updatedUsuario),
+    "Error al actualizar usuario"
+  ).then(({ data, error }) => ({ usuario: data, error }));
 };
 
-export const useUsuarios = (): { usuarios: UsuarioResponse[] | null; error?: string } => {
-    const [usuarios, setUsuarios] = useState<UsuarioResponse[] | null>(null);
-    const [error, setError] = useState<string | undefined>();
-  
-    const cargarUsuario = async () => {
-      try {
-        const usuariosResponse = await getUsuarios();
-        if (usuariosResponse) {
-          setUsuarios(usuariosResponse);
-          setError(undefined);
-        } else {
-          setError("Usuario no encontrado");
-        }
-      } catch (err) {
-        setError("Error al cargar el usuario");
-        console.error("Error en cargarUsuario:", err);
-      }
-    };
-  
-    useEffect(() => {
-      cargarUsuario();
-    });
-  
-    return { usuarios, error };
-};
-
-export const useUpdateUsuario = async (id: number, updatedUsuario: UsuarioRequest): Promise<{ usuario: UsuarioResponse | null; error?: string; }> => {
-  try {
-    const usuarioResponse = await putUsuario(id, updatedUsuario);
-    if (usuarioResponse) {
-      return {usuario:usuarioResponse, error:undefined}
-    } else {
-      return {usuario:null, error:"Error al actualizar usuario"}
-    }
-  } catch (err) {
-    console.error("Error en cargarUsuario:", err);
-    return {usuario:null, error:"Error al actualizar usuario"}
-  }
+export const usePostUsuario = async (
+  usuario: UsuarioRequest
+): Promise<{ usuario: UsuarioResponse | null; error?: string }> => {
+  return useDataUploader(
+    () => postUsuario(usuario),
+    "Error al subir usuario"
+  ).then(({ data, error }) => ({ usuario: data, error }));
 };
 
 export const useUserResponseToRequest = (user: UsuarioResponse): UsuarioRequest => {

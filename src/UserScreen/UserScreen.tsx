@@ -9,11 +9,11 @@ import { UsuarioResponse } from '@/interfaces/api/User';
 
 const ProfileScreen: React.FC = () => {
 
-  const { usuario, error } = useUsuario(1);
+  const { data, error } = useUsuario(1);
   const [ user, setUser ] = useState<UsuarioResponse| null>(null);
   const [editedUsername, setEditedUsername] = useState('');
   useEffect(() => {
-    setUser(usuario);
+    setUser(data);
   })
 
   const handleSaveName = async () => {
