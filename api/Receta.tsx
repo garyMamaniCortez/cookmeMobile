@@ -1,54 +1,24 @@
 import { RecetaRequest, RecetaResponse } from "@/interfaces/api/Receta";
-import RequestApi from "./RequestApi";
+import { handleApiRequest } from "./RequestApi";
 
 const endpoint: string = "receta";
 
-export const getReceta = async (id: number): Promise<RecetaResponse | null> => {
-  try {
-    const response = await RequestApi.get<RecetaResponse>(`${endpoint}/${id}`);
-    return response.data;
-  } catch (error: any) {
-    console.error("Error al obtener la receta:", error);
-    return null;
-  }
-};
+export const getReceta = async (id: number): Promise<RecetaResponse | null> =>
+  handleApiRequest<RecetaResponse>("get", `${endpoint}/${id}`);
 
-export const getRecetas = async (): Promise<RecetaResponse[] | null> => {
-  try {
-    const response = await RequestApi.get<RecetaResponse[]>(`${endpoint}`);
-    return response.data;
-  } catch (error: any) {
-    console.error("Error al obtener las recetas:", error);
-    return null;
-  }
-};
+export const getRecetas = async (): Promise<RecetaResponse[] | null> =>
+  handleApiRequest<RecetaResponse[]>("get", endpoint);
 
-export const postReceta = async (Receta: RecetaRequest): Promise<RecetaResponse | null> => {
-  try {
-    const response = await RequestApi.post<RecetaResponse>(`${endpoint}`, Receta);
-    return response.data;
-  } catch (error: any) {
-    console.error("Error al crear la receta:", error);
-    return null;
-  }
-};
+export const postReceta = async (
+  usuario: RecetaRequest
+): Promise<RecetaResponse | null> =>
+  handleApiRequest<RecetaResponse>("post", endpoint, usuario);
 
-export const putReceta = async (id: number, Receta: RecetaRequest): Promise<RecetaResponse | null> => {
-  try {
-    const response = await RequestApi.put<RecetaResponse>(`${endpoint}/${id}`, Receta);
-    return response.data;
-  } catch (error: any) {
-    console.error("Error al actualizar la receta:", error);
-    return null;
-  }
-};
+export const putReceta = async (
+  id: number,
+  usuario: RecetaRequest
+): Promise<RecetaResponse | null> =>
+  handleApiRequest<RecetaResponse>("put", `${endpoint}/${id}`, usuario);
 
-export const deleteReceta = async (id: number): Promise<RecetaResponse | null> => {
-  try {
-    const response = await RequestApi.delete(`${endpoint}/${id}`);
-    return response.data;
-  } catch (error: any) {
-    console.error("Error al obtener la receta:", error);
-    return null;
-  }
-};
+export const deleteReceta = async (id: number): Promise<RecetaResponse | null> =>
+  handleApiRequest<RecetaResponse>("delete", `${endpoint}/${id}`);
