@@ -6,6 +6,7 @@ import styles from './styles';
 import { Navbar } from '@/components';
 import { useUpdateUsuario, useUserResponseToRequest, useUsuario } from '@/hooks/useUsuario';
 import { UsuarioResponse } from '@/interfaces/api/User';
+import ErrorScreen from '../ErrorScreen/ErrorScreen';
 
 const ProfileScreen: React.FC = () => {
 
@@ -106,11 +107,7 @@ const ProfileScreen: React.FC = () => {
     );
   } else {
     return(
-      <View style={styles.errorView}>
-        <Text style={styles.error}>
-          Algo salio mal :c {error}
-        </Text>
-      </View>
+      <ErrorScreen error={error!}></ErrorScreen>
     );
   }
 };
