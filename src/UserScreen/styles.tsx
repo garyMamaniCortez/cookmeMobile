@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   background: {
@@ -26,7 +26,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center', // Centra horizontalmente
     marginVertical: 10,
-    width: '100%', // Para que ocupe toda la pantalla
+    width: Dimensions.get('window').width * 0.5,
+    borderRadius: 8, // Bordes redondeados
+    backgroundColor: "rgba(123, 13, 68, 0.2)",
   },
   username: {
     fontSize: 22,
@@ -59,6 +61,26 @@ const styles = StyleSheet.create({
     marginTop: 15,
     textAlign: 'center',
     textTransform: 'capitalize', // Opcional: formatea el texto para una presentación limpia
+  },
+  error: {
+    color: "#FF0000", // Color rojo para resaltar el error
+    fontSize: 16, // Tamaño de texto legible
+    fontWeight: "bold", // Negrita para darle más énfasis
+    textAlign: "center", // Centrar el texto horizontalmente
+    marginVertical: 10, // Separación vertical
+    padding: 10, // Espaciado interno
+    backgroundColor: "#FEECEC", // Fondo suave para resaltar el mensaje
+    borderRadius: 8, // Bordes redondeados
+    borderWidth: 1, // Borde del contenedor
+    borderColor: "#FFCCCC", // Color del borde ligeramente más oscuro que el fondo
+  },
+  errorView: {
+    flex: 1,
+    justifyContent: "center", // Centrar verticalmente
+    alignItems: "center", // Centrar horizontalmente
+    margin: 20, // Margen alrededor del contenedor
+    padding: 10, // Espaciado interno
+    borderRadius: 8, // Bordes redondeados
   },
 });
 
