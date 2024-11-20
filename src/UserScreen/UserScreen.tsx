@@ -7,10 +7,11 @@ import { Navbar } from '@/components';
 import { useUpdateUsuario, useUserResponseToRequest, useUsuario } from '@/hooks/useUsuario';
 import { UsuarioResponse } from '@/interfaces/api/User';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
+import { Globals } from '@/constants/global';
 
 const ProfileScreen: React.FC = () => {
 
-  const { data, error } = useUsuario(1);
+  const { data, error } = useUsuario(Globals.id_usuario);
   const [ user, setUser ] = useState<UsuarioResponse| null>(null);
   const [editedUsername, setEditedUsername] = useState('');
   useEffect(() => {
