@@ -64,11 +64,12 @@ export default StyleSheet.create({
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
       paddingLeft: 0,
+      paddingTop: 0,
       padding: 10,
       alignSelf: 'stretch',
     },
     boxText: {
-      fontSize: 16,
+      fontSize: 17,
       fontWeight: 'bold',
       color: '#000',
     },
