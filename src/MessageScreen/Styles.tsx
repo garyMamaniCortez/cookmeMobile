@@ -30,9 +30,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: '100%',
+    width: '90%',
     height: 200,
     marginBottom: 20,
+    alignSelf: 'center',
+    marginTop: 20,
+    borderRadius: 10,
   },
   commentsSection: {
     flex: 1,
