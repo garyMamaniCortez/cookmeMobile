@@ -2,38 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import styles from './styles';
 import { StatusBar } from 'expo-status-bar';
 import { useReceta } from '@/hooks/useReceta';
 import { RecetaResponse } from '@/interfaces/api/Receta';
 import { useUsuario } from '@/hooks/useUsuario';
 import { UsuarioResponse } from '@/interfaces/api/User';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
-import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 
-interface RecipeScreenProps{
-    id_receta : number
-}
-
-const RecipeScreen: React.FC<RecipeScreenProps> = ({id_receta}) => {
-
-    const {data, error} = useReceta(id_receta);
+const RecipeScreen: React.FC< {route: any} > = ({route}) => {
+    const {id_receta} = route.params || 1;
+    const navigation = useNavigation<any>();
+    const {data, error} = useReceta(id_receta? id_receta : 1);
     const { data:user, error:userError } = useUsuario(data?.id_usuario!? data?.id_usuario! : 1);
     const [ usuario, setUsuario ] = useState<UsuarioResponse | null>(null);
     const [ receta, setReceta ] = useState<RecetaResponse | null>(null);
     const [ instruccionesLista, setInstruccionesLista ] = useState<string[]>();
     const [ ingredientesLista, setIngredientesLista ] = useState<string[]>();
-    const navigation = useNavigation<any>(); // Usamos el tipo 'any' si no tienes tipos definidos para la navegación
-
     const [isSaved, setIsSaved] = useState(false);
-
-    const goToMessages = () => {
-      navigation.navigate('Message');
-    };
-
-    const toggleSave = () => {
-      setIsSaved(!isSaved);
-    };
+    const [isHeartLiked, setIsHeartLiked] = useState(false);
     useEffect(() => {
         setReceta(data);
         setUsuario(user);
@@ -54,6 +42,18 @@ const RecipeScreen: React.FC<RecipeScreenProps> = ({id_receta}) => {
             <Text key={item} style={styles.text}> • {item}</Text>
         )
     }
+    const goToMessages = () => {
+        navigation.navigate('Message', { id_receta });
+    };
+    const toggleSave = () => {
+        setIsSaved(!isSaved);
+    };
+    const toggleHeart = () => {
+        setIsHeartLiked(!isHeartLiked);
+    }
+    const goBack = () => {
+        navigation.goBack();
+    };
 
     if(receta && usuario){
         return (
@@ -61,19 +61,22 @@ const RecipeScreen: React.FC<RecipeScreenProps> = ({id_receta}) => {
                 <StatusBar style="dark" backgroundColor="transparent" translucent={false} />
                 {/* Header */}
                 <View style={styles.header}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={goBack}>
                         <Ionicons name="return-down-back" size={24} color="black" />
                     </TouchableOpacity>
                     <Text style={styles.title}>{receta?.nombre_receta}</Text>
-                    <TouchableOpacity onPress={toggleSave}>
                     <View style={styles.headerIcons}>
-                        <Ionicons name="bookmark-outline" size={24} color="black" />
+                        <TouchableOpacity onPress={toggleSave}>
+                            <Ionicons name={isSaved ? "bookmark" : "bookmark-outline"} size={24} color="black" />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={toggleHeart}>
+                            <Ionicons name={isHeartLiked ? "heart" : "heart-outline"} size={24} color={isHeartLiked ? 'red' : 'black'} />
+                        </TouchableOpacity>
                     </View>
-                    </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity onPress={goToMessages} style={{ marginBottom: 20 }}>
-                  <MaterialIcons name="add-comment" size={24} color="black" />
+                    <MaterialIcons name="add-comment" size={24} color="black" />
                 </TouchableOpacity>
                 {/* Subheader */}
                 <View style={styles.subHeader}>

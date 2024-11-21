@@ -1,34 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './Styles';
 import { useNavigation } from '@react-navigation/native';
+import { useReceta } from '@/hooks/useReceta';
+import { RecetaResponse } from '@/interfaces/api/Receta';
 
-// Definir el tipo para los comentarios
 interface Comment {
   id: string;
   user: string;
   text: string;
 }
 
-const CommentsScreen: React.FC = () => {
-  // Estado de los comentarios
+const CommentsScreen: React.FC<{ route: any }> = ({route}) => {
+  
+  const {id_receta} = route.params || 1;
+
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>(''); 
 
-  // Estado para los íconos
-  const [isHeartLiked, setIsHeartLiked] = useState(false);  // Para el corazón
-  const [isSaved, setIsSaved] = useState(false);  // Para el ícono de guardar
+  const [isHeartLiked, setIsHeartLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
-  const navigation = useNavigation();  // Usamos el hook de navegación
+  const {data, error} = useReceta(id_receta? id_receta : 1);
+  const [ receta, setReceta ] = useState<RecetaResponse | null>(null);
+  useEffect(() => {
+      setReceta(data);
+  });
 
-  // Función para navegar hacia atrás (a la pantalla de la receta)
+  const navigation = useNavigation<any>();
+
   const goBack = () => {
-    navigation.goBack();  // Regresa a la pantalla anterior (Receta)
+    navigation.navigate("Recipe", { id_receta: 2 });
   };
 
-  // Función para agregar un nuevo comentario
+  const toggleSave = () => {
+    setIsSaved(!isSaved);
+  };
+
   const addComment = () => {
     if (newComment.trim()) {
       const newCommentObj: Comment = {
@@ -47,27 +57,17 @@ const CommentsScreen: React.FC = () => {
 
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={goBack}> {/* Acción de navegación al presionar la flecha */}
-          <Ionicons name="return-down-back" size={24} color="black" />
+        <TouchableOpacity onPress={goBack}>
+            <Ionicons name="return-down-back" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.title}>Tacos al Pastor</Text>
+        <Text style={styles.title}>{receta?.nombre_receta}</Text>
         <View style={styles.headerIcons}>
-          {/* Ícono de Guardar con cambio de color */}
-          <TouchableOpacity onPress={() => setIsSaved(!isSaved)}>
-            <Ionicons 
-              name={isSaved ? "bookmark" : "bookmark-outline"}  // Cambia a "bookmark" cuando está guardado
-              size={24} 
-              color={isSaved ? 'yellow' : 'black'} // Cambia el color a amarillo cuando está guardado
-            />
-          </TouchableOpacity>
-          {/* Ícono de Corazón con cambio de color */}
-          <TouchableOpacity onPress={() => setIsHeartLiked(!isHeartLiked)}>
-            <Ionicons 
-              name={isHeartLiked ? "heart" : "heart-outline"}  // Cambia a "heart" cuando está gustado
-              size={24} 
-              color={isHeartLiked ? 'red' : 'black'} // Cambia el color a rojo cuando está gustado
-            />
-          </TouchableOpacity>
+            <TouchableOpacity onPress={toggleSave}>
+                <Ionicons name={isSaved ? "bookmark" : "bookmark-outline"} size={24} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setIsHeartLiked(!isHeartLiked)}>
+                <Ionicons name={isHeartLiked ? "heart" : "heart-outline"} size={24} color={isHeartLiked ? 'red' : 'black'} />
+            </TouchableOpacity>
         </View>
       </View>
 
