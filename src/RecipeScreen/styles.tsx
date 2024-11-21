@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+const screenHeight = Dimensions.get('window').height;
 
 export default StyleSheet.create({
     container: {
@@ -11,7 +13,9 @@ export default StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: 10,
+      width: '100%',
+      alignSelf: 'center',
+      marginTop: screenHeight * 0.02,
     },
     subHeader: {
       alignItems: 'center',
@@ -26,6 +30,7 @@ export default StyleSheet.create({
     },
     headerIcons: {
       flexDirection: 'row',
+      gap: 10,
       alignItems: 'center',
     },
     icon: {

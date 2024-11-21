@@ -75,7 +75,7 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
                     </View>
                 </View>
 
-                <TouchableOpacity onPress={goToMessages} style={{ marginBottom: 20 }}>
+                <TouchableOpacity onPress={goToMessages} style={{ marginBottom: 20, marginTop:10 }}>
                     <MaterialIcons name="add-comment" size={24} color="black" />
                 </TouchableOpacity>
                 {/* Subheader */}

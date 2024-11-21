@@ -5,19 +5,21 @@ const screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#FFF7F0',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: 20, // Asegura que todo el contenido sea accesible
+    paddingBottom: 20,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '90%',
+    width: '100%',
     alignSelf: 'center',
-    marginTop: screenHeight * 0.02, // Baja el encabezado un 20% de la altura de la pantalla
+    marginTop: screenHeight * 0.02,
   },
   title: {
     fontSize: 20,
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
   },
   headerIcons: {
     flexDirection: 'row',
-    gap: 10, // Espacio entre los íconos
+    gap: 10,
     alignItems: 'center',
   },
   image: {
