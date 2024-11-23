@@ -10,4 +10,9 @@ export interface ComentarioResponse {
     id_usuario:    number;
     comentario:    string;
     fecha:         Date;
+    usuario:       UsuarioComentarioResponse;
+}
+
+export interface UsuarioComentarioResponse {
+    nombre_usuario: string;
 }
