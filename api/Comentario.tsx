@@ -3,22 +3,22 @@ import { handleApiRequest } from "./RequestApi";
 
 const endpoint: string = "comentario";
 
-export const getComentario = async (id: number): Promise<ComentarioResponse | null> =>
-  handleApiRequest<ComentarioResponse>("get", `${endpoint}/${id}`);
+export const getComentario = async (id: number): Promise<ComentarioResponse[] | null> =>
+  handleApiRequest<ComentarioResponse[]>("get", `${endpoint}/${id}`);
 
 export const getComentarios = async (): Promise<ComentarioResponse[] | null> =>
   handleApiRequest<ComentarioResponse[]>("get", endpoint);
 
 export const postComentario = async (
-  usuario: ComentarioRequest
+  comentario: ComentarioRequest
 ): Promise<ComentarioResponse | null> =>
-  handleApiRequest<ComentarioResponse>("post", endpoint, usuario);
+  handleApiRequest<ComentarioResponse>("post", endpoint, comentario);
 
 export const putComentario = async (
   id: number,
-  usuario: ComentarioRequest
+  comentario: ComentarioRequest
 ): Promise<ComentarioResponse | null> =>
-  handleApiRequest<ComentarioResponse>("put", `${endpoint}/${id}`, usuario);
+  handleApiRequest<ComentarioResponse>("put", `${endpoint}/${id}`, comentario);
 
 export const deleteComentario = async (id: number): Promise<ComentarioResponse | null> =>
   handleApiRequest<ComentarioResponse>("delete", `${endpoint}/${id}`);

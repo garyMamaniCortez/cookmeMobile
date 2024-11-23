@@ -12,7 +12,7 @@ import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import { useNavigation } from '@react-navigation/native';
 
 const RecipeScreen: React.FC< {route: any} > = ({route}) => {
-    const {id_receta} = route.params || 1;
+    const [id_receta, setIdReceta] = useState<number>(1);
     const navigation = useNavigation<any>();
     const {data, error} = useReceta(id_receta? id_receta : 1);
     const { data:user, error:userError } = useUsuario(data?.id_usuario!? data?.id_usuario! : 1);
@@ -23,6 +23,7 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
     const [isSaved, setIsSaved] = useState(false);
     const [isHeartLiked, setIsHeartLiked] = useState(false);
     useEffect(() => {
+        //setIdReceta(route.params.id_receta);
         setReceta(data);
         setUsuario(user);
     });

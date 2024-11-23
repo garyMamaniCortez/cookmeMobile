@@ -3,7 +3,7 @@ import { ComentarioRequest, ComentarioResponse } from '@/interfaces/api/Comentar
 import { useDataLoader, useDataUploader } from './useData';
 
 export const useComentario = (id: number) =>
-  useDataLoader<ComentarioResponse>(() => getComentario(id), [id]);
+  useDataLoader<ComentarioResponse[]>(() => getComentario(id), [id]);
 
 export const useComentarios = () =>
   useDataLoader<ComentarioResponse[]>(() => getComentarios(), []);
