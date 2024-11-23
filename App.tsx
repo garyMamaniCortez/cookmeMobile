@@ -9,7 +9,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName='User'
+        initialRouteName='Home'
         screenOptions={{
           headerShown: false,
           tabBarButton: () => null, 

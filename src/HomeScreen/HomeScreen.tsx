@@ -4,6 +4,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './styles';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
+import { Navbar } from '@/components';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<any>();
@@ -77,24 +78,7 @@ const HomeScreen: React.FC = () => {
         </View>
       </ScrollView>
 
-      {/* Navigation Bar */}
-      <View style={styles.navigationBar}>
-        <TouchableOpacity>
-          <Ionicons name="home" size={24} color="#000" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="notifications-outline" size={24} color="#000" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="add-circle-outline" size={24} color="#000" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="bookmark-outline" size={24} color="#000" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="person-outline" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
+     <Navbar></Navbar>
     </View>
   );
 };
