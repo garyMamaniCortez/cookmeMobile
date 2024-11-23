@@ -6,47 +6,60 @@ import styles from './Styles';
 import { useNavigation } from '@react-navigation/native';
 import { useReceta } from '@/hooks/useReceta';
 import { RecetaResponse } from '@/interfaces/api/Receta';
-
-interface Comment {
-  id: string;
-  user: string;
-  text: string;
-}
+import { ComentarioRequest, ComentarioResponse } from '@/interfaces/api/Comentario';
+import { useComentario, usePostComentario } from '@/hooks/useComentario';
+import { Globals } from '@/constants/global';
 
 const CommentsScreen: React.FC<{ route: any }> = ({route}) => {
   
-  const {id_receta} = route.params || 1;
+  const [id_receta, setIdReceta] = useState<number>(1);
 
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<ComentarioResponse[]>([]);
   const [newComment, setNewComment] = useState<string>(''); 
 
   const [isHeartLiked, setIsHeartLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
   const {data, error} = useReceta(id_receta? id_receta : 1);
+  const {data:comentarios, error:comentariosError} = useComentario(id_receta? id_receta : 1);
   const [ receta, setReceta ] = useState<RecetaResponse | null>(null);
   useEffect(() => {
+      setIdReceta(route.params.id_receta);
       setReceta(data);
+      if(comentarios)
+        setComments(comentarios);
   });
 
   const navigation = useNavigation<any>();
 
   const goBack = () => {
-    navigation.navigate("Recipe", { id_receta: 2 });
+    navigation.navigate("Recipe", { id_receta });
   };
 
   const toggleSave = () => {
     setIsSaved(!isSaved);
   };
 
-  const addComment = () => {
+  const addComment = async () => {
     if (newComment.trim()) {
-      const newCommentObj: Comment = {
-        id: Date.now().toString(),  // Usamos la fecha actual como ID único
-        user: 'Usuario',            
-        text: newComment.trim(),
+      const newCommentObj: ComentarioRequest = {
+        id_receta:  id_receta,
+        id_usuario: Globals.id_usuario,
+        comentario: newComment,
       };
-      setComments((prevComments) => [...prevComments, newCommentObj]);
+      const newCommentObject: ComentarioResponse = {
+        id_comentario: 0,
+        id_receta:  id_receta,
+        id_usuario: Globals.id_usuario,
+        comentario: newComment,
+        fecha: new Date(),
+        usuario: {nombre_usuario: Globals.nombre_usuario}
+      }
+      const {comentario, error } = await usePostComentario(newCommentObj);
+      comentarios?.push(newCommentObject);
+      if(error){
+        alert(newCommentObj.id_receta);
+      }
       setNewComment('');  // Limpiamos el campo de texto
     }
   };
@@ -88,10 +101,10 @@ const CommentsScreen: React.FC<{ route: any }> = ({route}) => {
           </Text>
         ) : (
           comments.map((comment) => (
-            <View key={comment.id} style={styles.commentBox}>
+            <View key={comment.id_comentario} style={styles.commentBox}>
               <Text style={styles.commentText}>
-                <Text style={{ fontWeight: 'bold' }}>{comment.user}: </Text>
-                {comment.text}
+                <Text style={{ fontWeight: 'bold' }}>{comment.usuario.nombre_usuario}: </Text>
+                {comment.comentario}
               </Text>
             </View>
           ))
