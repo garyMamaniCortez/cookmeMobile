@@ -5,9 +5,8 @@ const screenWidth = Dimensions.get('window').width;
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF7F0',
-    paddingHorizontal: 15,
-    paddingTop: 20,
+    paddingHorizontal: 15, // Espaciado horizontal
+    paddingTop: 20,        // Espaciado superior
   },
   header: {
     flexDirection: 'row',
@@ -30,6 +29,7 @@ export default StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 20,
     elevation: 3,
+    width: '100%', // Ocupa todo el ancho del contenedor
   },
   mainCardImage: {
     width: '100%',
@@ -39,9 +39,10 @@ export default StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 10,
     overflow: 'hidden',
-    width: (screenWidth - 60) / 2,
+    width: (screenWidth - 60) / 2, // Dos tarjetas por fila con espaciado entre ellas
     marginBottom: 15,
     elevation: 3,
+    alignItems: 'center', // Centra contenido en la tarjeta
   },
   cardImage: {
     width: '100%',
@@ -62,22 +63,11 @@ export default StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between', // Asegura espaciado uniforme
+    width: '100%',
   },
   contentContainer: {
-    paddingBottom: 70,
-  },
-  navigationBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    height: 60,
-    backgroundColor: '#FFF',
-    borderTopWidth: 1,
-    borderTopColor: '#DDD',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    paddingBottom: 70, // Espaciado inferior para evitar solapamiento con la barra de navegación
+    alignItems: 'center', // Centra las tarjetas en el eje horizontal
   },
 });
