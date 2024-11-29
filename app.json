@@ -23,6 +23,10 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "sdkVersion": "52.0.0"
+    "sdkVersion": "52.0.0",
+    "plugins": [
+      "expo-font",
+      "expo-router"
+    ]
   }
 }

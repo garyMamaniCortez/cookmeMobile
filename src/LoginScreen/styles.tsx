@@ -11,7 +11,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#A0522D', // Color de texto marrón
+    color: '#9C4C16', // Color de texto marrón
     marginBottom: 20,
   },
   image: {
@@ -19,10 +19,12 @@ export default StyleSheet.create({
     height: 150,
     borderRadius: 75,
     marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   label: {
     fontSize: 16,
-    color: '#A0522D',
+    color: '#7B0D44',
     alignSelf: 'flex-start',
     marginBottom: 5,
     marginLeft: 10,
@@ -31,7 +33,7 @@ export default StyleSheet.create({
     width: '100%',
     padding: 15,
     borderRadius: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFBF7',
     marginBottom: 15,
     elevation: 2, // sombra para el campo de texto
   },
@@ -39,22 +41,21 @@ export default StyleSheet.create({
     width: '60%',
     padding: 15,
     borderRadius: 10,
-    backgroundColor: '#8B0000', // Color del botón
+    backgroundColor: '#7B0D44', // Color del botón
     alignItems: 'center',
     marginBottom: 20,
   },
   loginButtonText: {
-    color: '#fff',
+    color: '#FFFBF7',
     fontSize: 16,
-    fontWeight: 'bold',
   },
   forgotPassword: {
-    color: '#A0522D',
+    color: '#7B0D44',
     marginBottom: 20,
     textDecorationLine: 'underline',
   },
   register: {
-    color: '#A0522D',
+    color: '#7B0D44',
     textDecorationLine: 'underline',
   },
 });
