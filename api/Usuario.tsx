@@ -1,4 +1,4 @@
-import { UsuarioRequest, UsuarioResponse } from "@/interfaces/api/User";
+import { UsuarioLogin, UsuarioRequest, UsuarioResponse } from "@/interfaces/api/User";
 import { handleApiRequest } from "./RequestApi";
 
 const endpoint: string = "usuario";
@@ -22,3 +22,8 @@ export const putUsuario = async (
 
 export const deleteUsuario = async (id: number): Promise<UsuarioResponse | null> =>
   handleApiRequest<UsuarioResponse>("delete", `${endpoint}/${id}`);
+
+export const postLogin = async (
+  usuario: UsuarioLogin
+): Promise<UsuarioResponse | null> =>
+  handleApiRequest<UsuarioResponse>("post", "login", usuario);

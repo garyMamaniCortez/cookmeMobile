@@ -15,3 +15,8 @@ export interface UsuarioResponse {
     password:       string;
     updatedAt:      Date;
 }
+
+export interface UsuarioLogin {
+    email: string,
+    password: string
+}
