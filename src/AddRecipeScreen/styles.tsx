@@ -3,9 +3,14 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#9A031E', // Fondo sólido
     alignItems: 'center',
-    paddingTop: 60, // Baja todos los elementos un 20% adicional
+    paddingTop: 20, // Baja todos los elementos un 20% adicional
+  },
+  tittleText: {
+    fontSize: 26,
+    color: '1D1B20',
+    paddingBottom: '5%',
+    fontWeight: 'bold',
   },
   input: {
     width: '90%',
@@ -49,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column', // Asegura que el contenido se apile de arriba hacia abajo
   },
   smallBox: {
-    width: '45%',
+    width: '55%',
     height: 100,
   },
   largeBox: {
@@ -57,17 +62,21 @@ const styles = StyleSheet.create({
     height: 250,
     marginBottom: 20, // Reduce espacio para el botón adicional
   },
-  boxText: {
-    fontSize: 16,
-    color: '#333',
-    textAlign: 'left', // Alinea el texto al inicio dentro del cuadro
-    width: '100%', // Asegura que el texto ocupe todo el ancho del cuadro
-    marginBottom: 10, // Espacio extra debajo del texto para que no esté pegado al borde
+  timeColumn: {
+    width: '40%', // Tiempos ocupan un 40% del ancho del contenedor padre
+    justifyContent: 'space-between', // Espacio uniforme entre los inputs
+  },
+  timeInput: {
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+    padding: 10,
+    elevation: 1,
+    height: 'auto',
   },
   button: {
     width: '50%',
     height: 50,
-    backgroundColor: '#FFD700', // Color amarillo
+    backgroundColor: '#FB8B24',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
@@ -75,21 +84,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    color: '#333',
+    color: '#1D1B20',
     fontWeight: 'bold',
-  },
-  navigation: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%', // Ocupa el 100% del ancho de la pantalla
-    position: 'absolute',
-    bottom: 0, // Pegado al borde inferior
-    left: 0,
-    right: 0,
-    backgroundColor: '#FFF',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#DDD',
   },
 });
 
