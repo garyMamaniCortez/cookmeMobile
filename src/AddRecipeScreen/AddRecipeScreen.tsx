@@ -3,7 +3,7 @@ import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import styles from './styles';
 
-const RecipeUpScreen: React.FC = () => {
+const AddRecipeUpScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       {/* Nombre de la receta */}
@@ -76,4 +76,4 @@ const RecipeUpScreen: React.FC = () => {
   );
 };
 
-export default RecipeUpScreen;
+export default AddRecipeUpScreen;

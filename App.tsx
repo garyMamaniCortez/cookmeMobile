@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { LoginScreen, RecipeScreen, UserScreen } from './src';
+import { AddRecipeScreen, LoginScreen, RecipeScreen, UserScreen } from './src';
 import { Navbar } from './components';
 
 const Tab = createBottomTabNavigator();
@@ -19,7 +19,7 @@ export default function App() {
       >
         <Tab.Screen name='Login' component={LoginScreen} />
         <Tab.Screen name='User' component={UserScreen} />
-        <Tab.Screen name='Recipe' component={RecipeScreen} />
+        <Tab.Screen name='Add' component={AddRecipeScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
