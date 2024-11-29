@@ -1,5 +1,5 @@
-import { getUsuario, getUsuarios, postUsuario, putUsuario } from '@/api/Usuario';
-import { UsuarioRequest, UsuarioResponse } from '@/interfaces/api/User';
+import { getUsuario, getUsuarios, postLogin, postUsuario, putUsuario } from '@/api/Usuario';
+import { UsuarioLogin, UsuarioRequest, UsuarioResponse } from '@/interfaces/api/User';
 import { useDataLoader, useDataUploader } from './useData';
 
 export const useUsuario = (id: number) =>
@@ -7,6 +7,15 @@ export const useUsuario = (id: number) =>
 
 export const useUsuarios = () =>
   useDataLoader<UsuarioResponse[]>(() => getUsuarios(), []);
+
+export const useLogin = async (
+  usuario: UsuarioLogin
+): Promise<{ usuario: UsuarioResponse | null; error?: string }> => {
+  return useDataUploader(
+    () => postLogin(usuario),
+    "Error en las credenciales"
+  ).then(({ data, error }) => ({ usuario: data, error }));
+};
 
 export const useUpdateUsuario = async (
   id: number,
