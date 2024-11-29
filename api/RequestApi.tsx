@@ -7,7 +7,7 @@ export const handleApiRequest = async <T extends Object>(
   ): Promise<T | null> => {
     
     const RequestApi = axios.create({
-        baseURL: "http://192.168.1.19:3000/api"
+        baseURL: "http://192.168.1.10:3000/api"
     });
 
     try {

@@ -23,7 +23,7 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
     const [isSaved, setIsSaved] = useState(false);
     const [isHeartLiked, setIsHeartLiked] = useState(false);
     useEffect(() => {
-        //setIdReceta(route.params.id_receta);
+        setIdReceta(route.params.id_receta);
         setReceta(data);
         setUsuario(user);
     });
@@ -53,7 +53,7 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
         setIsHeartLiked(!isHeartLiked);
     }
     const goBack = () => {
-        navigation.goBack();
+        navigation.navigate('Home');
     };
 
     if(receta && usuario){
