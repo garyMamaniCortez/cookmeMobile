@@ -6,23 +6,27 @@ import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import { Navbar } from '@/components';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRecetas } from '@/hooks/useReceta';
+import ErrorScreen from '../ErrorScreen/ErrorScreen';
+import { RecetaResponse } from '@/interfaces/api/Receta';
 
 const HomeScreen: React.FC = () => {
+  const {data, error} = useRecetas();
   const navigation = useNavigation<any>();
 
-  const goToRecipe = () => {
-    navigation.navigate('RecipeScreen', { id_receta: 1 }); // Navega a RecipeScreen
+  const goToRecipe = (id_receta : number) => {
+    navigation.navigate('Recipe', { id_receta});
   };
 
-  const renderCard = () => (
-    <TouchableOpacity style={styles.card} onPress={goToRecipe}>
+  const renderCard = (receta: RecetaResponse) => (
+    <TouchableOpacity style={styles.card} onPress={() => goToRecipe(receta.id_receta)} key={receta.id_receta.toString()}>
       <Image
         source={{
-          uri: 'https://th.bing.com/th/id/R.29d71f83ddc95f2e0ed25142e2cf80ab?rik=uWWhOJerW9gHYA&riu=http%3a%2f%2fforevertwentysomethings.com%2fwp-content%2fuploads%2f2016%2f10%2ftacos.jpg&ehk=%2b4em9gTW65oi2Fbr8uJdc5XILlgBOD5y9YE%2f9IlmSoo%3d&risl=&pid=ImgRaw&r=0',
+          uri: receta.imagen || 'https://th.bing.com/th/id/R.29d71f83ddc95f2e0ed25142e2cf80ab?rik=uWWhOJerW9gHYA&riu=http%3a%2f%2fforevertwentysomethings.com%2fwp-content%2fuploads%2f2016%2f10%2ftacos.jpg&ehk=%2b4em9gTW65oi2Fbr8uJdc5XILlgBOD5y9YE%2f9IlmSoo%3d&risl=&pid=ImgRaw&r=0',
         }}
         style={styles.cardImage}
       />
-      <Text style={styles.cardTitle}>Tacos al pastor</Text>
+      <Text style={styles.cardTitle}>{receta.nombre_receta}</Text>
       <View style={styles.cardStars}>
         {Array(5)
           .fill(null)
@@ -32,73 +36,56 @@ const HomeScreen: React.FC = () => {
       </View>
     </TouchableOpacity>
   );
+  if(data)
+    return (
+      <><LinearGradient
+        colors={['transparent', '#9C4C16']} // Fondo degradado de arriba hacia abajo
+        style={styles.container}
+      >
+        <StatusBar style="dark" backgroundColor="transparent" translucent={false} />
 
-  return (
-    <><LinearGradient
-      colors={['#F5EFED', '#9C4C16']} // Fondo degradado de arriba hacia abajo
-      style={styles.container}
-    >
-      <StatusBar style="dark" backgroundColor="transparent" translucent={false} />
+        {/* Header */}
+        <View style={styles.header}>
+          <TouchableOpacity>
+            <Ionicons name="menu" size={24} color="black" />
+          </TouchableOpacity>
+          <TextInput
+            style={styles.searchBar}
+            placeholder="Busqueda"
+            placeholderTextColor="#AAA" />
+        </View>
 
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <Ionicons name="menu" size={24} color="black" />
-        </TouchableOpacity>
-        <TextInput
-          style={styles.searchBar}
-          placeholder="Busqueda"
-          placeholderTextColor="#AAA" />
-      </View>
-
-      {/* Scrollable Content */}
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        {/* Main card */}
-        <TouchableOpacity style={styles.mainCard} onPress={goToRecipe}>
-          <Image
-            source={{
-              uri: 'https://th.bing.com/th/id/R.29d71f83ddc95f2e0ed25142e2cf80ab?rik=uWWhOJerW9gHYA&riu=http%3a%2f%2fforevertwentysomethings.com%2fwp-content%2fuploads%2f2016%2f10%2ftacos.jpg&ehk=%2b4em9gTW65oi2Fbr8uJdc5XILlgBOD5y9YE%2f9IlmSoo%3d&risl=&pid=ImgRaw&r=0',
-            }}
-            style={styles.mainCardImage} />
-          <Text style={styles.cardTitle}>Tacos al pastor</Text>
-          <View style={styles.cardStars}>
-            {Array(5)
-              .fill(null)
-              .map((_, index) => (
-                <Ionicons key={index} name="star" size={20} color="#FFD700" />
-              ))}
-          </View>
-        </TouchableOpacity>
-
-        {/* Smaller cards (with first card as button) */}
-        <View style={styles.grid}>
-          <TouchableOpacity style={styles.card} onPress={goToRecipe}>
+        {/* Scrollable Content */}
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          {/* Main card */}
+          <TouchableOpacity style={styles.mainCard} onPress={() => goToRecipe(data[0].id_receta)} key={data[0].id_receta.toString()}>
             <Image
               source={{
-                uri: 'https://th.bing.com/th/id/R.29d71f83ddc95f2e0ed25142e2cf80ab?rik=uWWhOJerW9gHYA&riu=http%3a%2f%2fforevertwentysomethings.com%2fwp-content%2fuploads%2f2016%2f10%2ftacos.jpg&ehk=%2b4em9gTW65oi2Fbr8uJdc5XILlgBOD5y9YE%2f9IlmSoo%3d&risl=&pid=ImgRaw&r=0',
+                uri: data[0].imagen ||'https://th.bing.com/th/id/R.29d71f83ddc95f2e0ed25142e2cf80ab?rik=uWWhOJerW9gHYA&riu=http%3a%2f%2fforevertwentysomethings.com%2fwp-content%2fuploads%2f2016%2f10%2ftacos.jpg&ehk=%2b4em9gTW65oi2Fbr8uJdc5XILlgBOD5y9YE%2f9IlmSoo%3d&risl=&pid=ImgRaw&r=0',
               }}
-              style={styles.cardImage} />
-            <Text style={styles.cardTitle}>Tacos al pastor</Text>
+              style={styles.mainCardImage} />
+            <Text style={styles.cardTitle}>{data[0].nombre_receta}</Text>
             <View style={styles.cardStars}>
               {Array(5)
                 .fill(null)
                 .map((_, index) => (
-                  <Ionicons key={index} name="star" size={16} color="#FFD700" />
+                  <Ionicons key={index} name="star" size={20} color="#FFD700" />
                 ))}
             </View>
           </TouchableOpacity>
 
-          {/* Additional cards */}
-          {Array(3)
-            .fill(null)
-            .map((_, index) => (
-              <React.Fragment key={index}>{renderCard()}</React.Fragment>
-            ))}
-
-        </View>
-      </ScrollView>
-    </LinearGradient><Navbar /></>
-  );
+          {/* Smaller cards (with first card as button) */}
+          <View style={styles.grid}>
+            {/* Additional cards */}
+            {data.slice(1).map((receta) => renderCard(receta))}
+          </View>
+        </ScrollView>
+      </LinearGradient><Navbar /></>
+    );
+  else
+    return (
+      <ErrorScreen error={error!} />
+    );
 };
 
 export default HomeScreen;
