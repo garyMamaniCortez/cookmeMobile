@@ -9,8 +9,13 @@ import { Globals } from '@/constants/global';
 import { MultiSelect } from 'react-native-element-dropdown';
 import { useCategorias } from '@/hooks/useCategoria';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
+import { usePostReceta } from '@/hooks/useReceta';
+import { useNavigation } from '@react-navigation/native';
 
 const AddRecipeUpScreen: React.FC = () => {
+
+  const navigation = useNavigation<any>();
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [ingredients, setIngredients] = useState('');
@@ -21,7 +26,7 @@ const AddRecipeUpScreen: React.FC = () => {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const {data, error} = useCategorias();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name || !ingredients || !prepTime || !cookTime || !steps) {
       Alert.alert('Error', 'Por favor, completa todos los campos.');
       return;
@@ -33,11 +38,12 @@ const AddRecipeUpScreen: React.FC = () => {
       instrucciones: steps,
       tiempo_preparacion: parseInt(prepTime, 10),
       tiempo_coccion: parseInt(cookTime, 10),
-      imagen: imageUri!,
+      imagen: "https://assets.afcdn.com/recipe/20210416/119490_w2048h1536c1cx363cy240.jpg", //modificar esto
       id_categoria: parseInt(category[0]), // modificar esto
       id_usuario: Globals.id_usuario
     };
 
+    
     setName('');
     setIngredients('');
     setDescription('');
@@ -46,9 +52,8 @@ const AddRecipeUpScreen: React.FC = () => {
     setSteps('');
     setCategory([]);
     setImageUri(null);
-
-    console.log('Nueva receta:', newRecipe);
-    Alert.alert('Éxito', 'La receta se ha subido correctamente.');
+    const {receta, error} = await usePostReceta(newRecipe);
+    navigation.navigate('Home');
   };
   if(data)
   return (

@@ -10,15 +10,15 @@ export const getRecetas = async (): Promise<RecetaResponse[] | null> =>
   handleApiRequest<RecetaResponse[]>("get", endpoint);
 
 export const postReceta = async (
-  usuario: RecetaRequest
+  receta: RecetaRequest
 ): Promise<RecetaResponse | null> =>
-  handleApiRequest<RecetaResponse>("post", endpoint, usuario);
+  handleApiRequest<RecetaResponse>("post", endpoint, receta);
 
 export const putReceta = async (
   id: number,
-  usuario: RecetaRequest
+  receta: RecetaRequest
 ): Promise<RecetaResponse | null> =>
-  handleApiRequest<RecetaResponse>("put", `${endpoint}/${id}`, usuario);
+  handleApiRequest<RecetaResponse>("put", `${endpoint}/${id}`, receta);
 
 export const deleteReceta = async (id: number): Promise<RecetaResponse | null> =>
   handleApiRequest<RecetaResponse>("delete", `${endpoint}/${id}`);
