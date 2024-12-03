@@ -6,5 +6,5 @@ export { default as SearchBar } from './SearchBar/SearchBar';
 export { default as Stars } from './Stars/Stars';
 export { default as ThemedButton } from './ThemedButton/ThemedButton';
 export { default as ThemedText, ThemedTextProps } from './ThemedText/ThemedText'
-export { default as FoodCard } from './FoodCard/FoodCard';
+export { default as RecipeCard } from './RecipeCard/RecipeCard';
 export { default as ThemedInput } from './ThemedInput/ThemedInput';
