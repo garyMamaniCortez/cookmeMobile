@@ -28,7 +28,7 @@ const HomeScreen: React.FC = () => {
       />
       <Text style={styles.cardTitle}>{receta.nombre_receta}</Text>
       <View style={styles.cardStars}>
-        {Array(5)
+        {Array(receta.promedio_valoracion)
           .fill(null)
           .map((_, index) => (
             <Ionicons key={index} name="star" size={16} color="#FFD700" />
@@ -66,7 +66,7 @@ const HomeScreen: React.FC = () => {
               style={styles.mainCardImage} />
             <Text style={styles.cardTitle}>{data[0].nombre_receta}</Text>
             <View style={styles.cardStars}>
-              {Array(5)
+              {Array(data[0].promedio_valoracion)
                 .fill(null)
                 .map((_, index) => (
                   <Ionicons key={index} name="star" size={20} color="#FFD700" />
