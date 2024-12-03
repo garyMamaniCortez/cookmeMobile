@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 
@@ -11,16 +11,27 @@ const RegisterScreen: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigation = useNavigation<any>();
 
+  // Validar formato de correo
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleRegister = () => {
     if (username && email && password && confirmPassword) {
+      if (!isValidEmail(email)) {
+        Alert.alert('Error', 'Por favor, ingrese un correo válido');
+        return;
+      }
+
       if (password === confirmPassword) {
-        alert('Cuenta creada exitosamente');
+        Alert.alert('Éxito', 'Cuenta creada exitosamente');
         navigation.navigate('Login');
       } else {
-        alert('Las contraseñas no coinciden');
+        Alert.alert('Error', 'Las contraseñas no coinciden');
       }
     } else {
-      alert('Por favor, completa todos los campos');
+      Alert.alert('Error', 'Por favor, completa todos los campos');
     }
   };
 
@@ -33,34 +44,39 @@ const RegisterScreen: React.FC = () => {
       <StatusBar style="light" backgroundColor="transparent" translucent />
       <Text style={styles.title}>COOKME</Text>
 
-      <Text style={styles.label}>INGRESE SU USUARIO</Text>
+      <Text style={styles.label}>USUARIO</Text>
       <TextInput 
         style={styles.input}
-        placeholder="Ingrese su usuario"
+        placeholder="Ejemplo: cocinero123"
+        placeholderTextColor="#AAA"
         onChangeText={setUsername}
       />
 
-      <Text style={styles.label}>INGRESE UN CORREO</Text>
+      <Text style={styles.label}>CORREO</Text>
       <TextInput 
         style={styles.input}
-        placeholder="Ingrese un correo"
+        placeholder="Ejemplo: usuario@email.com"
+        placeholderTextColor="#AAA"
+        keyboardType="email-address"
         onChangeText={setEmail}
       />
 
-      <Text style={styles.label}>INGRESE UNA CONTRASEÑA</Text>
+      <Text style={styles.label}>CONTRASEÑA</Text>
       <TextInput 
         style={styles.input}
         placeholder="Ingrese una contraseña"
-        onChangeText={setPassword}
+        placeholderTextColor="#AAA"
         secureTextEntry
+        onChangeText={setPassword}
       />
 
-      <Text style={styles.label}>REPITA LA CONTRASEÑA</Text>
+      <Text style={styles.label}>CONTRASEÑA</Text>
       <TextInput 
         style={styles.input}
         placeholder="Repita la contraseña"
-        onChangeText={setConfirmPassword}
+        placeholderTextColor="#AAA"
         secureTextEntry
+        onChangeText={setConfirmPassword}
       />
 
       <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>

@@ -1,61 +1,56 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F48C06', // Fondo naranja
+    backgroundColor: '#FFA500', // Fondo anaranjado
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#A63A10', // Color del título
-    marginBottom: 30,
+    marginBottom: 20,
+    color: '#703800', // Tono oscuro para el título
   },
   label: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: '#A63A10', // Color de las etiquetas
-    alignSelf: 'flex-start',
-    marginLeft: 10,
     marginBottom: 5,
+    alignSelf: 'flex-start',
+    color: '#703800', // Mismo color que el título
   },
   input: {
     width: '100%',
     height: 50,
-    backgroundColor: '#FFFFFF', // Fondo blanco para inputs
-    borderRadius: 10,
-    paddingHorizontal: 15,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    paddingHorizontal: 10,
     marginBottom: 15,
+    borderWidth: 1,
+    borderColor: '#CCCCCC',
     fontSize: 16,
-    color: '#000000',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
+    color: '#000000', // Texto negro en los cuadros
   },
   registerButton: {
     width: '100%',
     height: 50,
-    backgroundColor: '#7B2CBF', // Botón morado oscuro
-    borderRadius: 10,
-    alignItems: 'center',
+    backgroundColor: '#9A031E', // Botón guindo como en login
+    borderRadius: 8,
     justifyContent: 'center',
-    marginVertical: 15,
+    alignItems: 'center',
+    marginTop: 15,
   },
   registerButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   loginLink: {
-    color: '#A63A10', // Color del enlace de texto
     fontSize: 14,
-    fontWeight: 'bold',
+    color: '#703800',
+    marginTop: 15,
     textDecorationLine: 'underline',
-    marginTop: 10,
   },
 });
