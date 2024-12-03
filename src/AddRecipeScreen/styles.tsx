@@ -1,9 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  scrollContainer:{
+    paddingBottom: 70,
+  },
   container: {
-    flex: 1,
     alignItems: 'center',
+    paddingBottom: 30,
+    paddingHorizontal: 0,
     paddingTop: 20, // Baja todos los elementos un 20% adicional
   },
   tittleText: {
@@ -38,6 +42,36 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'center', // Texto centrado en el cuadro de imagen
   },
+  dropdown: {
+    height: 40,
+    width: '50%',
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+    padding: 10,
+    color: '#777',
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    color: '#777',
+  },
+  selectedTextStyle: {
+    fontSize: 14,
+    color: '#1D1B20',
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+    color: '#1D1B20',
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+    color: '#1D1B20',
+  },
+  selectedStyle: {
+    borderRadius: 12,
+    borderColor: '#00000'
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -61,6 +95,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 250,
     marginBottom: 20, // Reduce espacio para el botón adicional
+    marginTop: 30,
   },
   timeColumn: {
     width: '40%', // Tiempos ocupan un 40% del ancho del contenedor padre
