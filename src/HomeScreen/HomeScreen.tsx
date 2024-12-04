@@ -4,11 +4,10 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './styles';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
-import { Navbar } from '@/components';
+import { Navbar, RecipeCard } from '@/components';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRecetas } from '@/hooks/useReceta';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
-import { RecetaResponse } from '@/interfaces/api/Receta';
 
 const HomeScreen: React.FC = () => {
   const {data, error} = useRecetas();
@@ -18,24 +17,6 @@ const HomeScreen: React.FC = () => {
     navigation.navigate('Recipe', { id_receta});
   };
 
-  const renderCard = (receta: RecetaResponse) => (
-    <TouchableOpacity style={styles.card} onPress={() => goToRecipe(receta.id_receta)} key={receta.id_receta.toString()}>
-      <Image
-        source={{
-          uri: receta.imagen || 'https://th.bing.com/th/id/R.29d71f83ddc95f2e0ed25142e2cf80ab?rik=uWWhOJerW9gHYA&riu=http%3a%2f%2fforevertwentysomethings.com%2fwp-content%2fuploads%2f2016%2f10%2ftacos.jpg&ehk=%2b4em9gTW65oi2Fbr8uJdc5XILlgBOD5y9YE%2f9IlmSoo%3d&risl=&pid=ImgRaw&r=0',
-        }}
-        style={styles.cardImage}
-      />
-      <Text style={styles.cardTitle}>{receta.nombre_receta}</Text>
-      <View style={styles.cardStars}>
-        {Array(5)
-          .fill(null)
-          .map((_, index) => (
-            <Ionicons key={index} name="star" size={16} color="#FFD700" />
-          ))}
-      </View>
-    </TouchableOpacity>
-  );
   if(data)
     return (
       <><LinearGradient
@@ -66,7 +47,7 @@ const HomeScreen: React.FC = () => {
               style={styles.mainCardImage} />
             <Text style={styles.cardTitle}>{data[0].nombre_receta}</Text>
             <View style={styles.cardStars}>
-              {Array(5)
+              {Array(data[0].promedio_valoracion? data[0].promedio_valoracion : 5)
                 .fill(null)
                 .map((_, index) => (
                   <Ionicons key={index} name="star" size={20} color="#FFD700" />
@@ -77,7 +58,9 @@ const HomeScreen: React.FC = () => {
           {/* Smaller cards (with first card as button) */}
           <View style={styles.grid}>
             {/* Additional cards */}
-            {data.slice(1).map((receta) => renderCard(receta))}
+            {data.slice(1).map((receta) => (
+                <RecipeCard key={receta.id_receta.toString()} receta={receta} />
+            ))}
           </View>
         </ScrollView>
       </LinearGradient><Navbar /></>

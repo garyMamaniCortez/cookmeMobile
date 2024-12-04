@@ -83,7 +83,7 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
                 <View style={styles.subHeader}>
                     <Text style={styles.subtitle}>Por: {usuario?.nombre_usuario}</Text>
                     <View style={styles.stars}>
-                        {Array(5)
+                        {Array(receta.promedio_valoracion? receta.promedio_valoracion : 5)
                         .fill(null)
                         .map((_, index) => (
                             <Ionicons key={index} name="star" size={20} color="#FFD700" />
