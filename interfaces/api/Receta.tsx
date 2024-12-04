@@ -21,3 +21,7 @@ export interface RecetaResponse {
     id_usuario:         number;
     promedio_valoracion:number | null;
 }
+
+export interface RecetaSearch {
+    query:              string;
+}

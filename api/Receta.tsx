@@ -1,4 +1,4 @@
-import { RecetaRequest, RecetaResponse } from "@/interfaces/api/Receta";
+import { RecetaRequest, RecetaResponse, RecetaSearch } from "@/interfaces/api/Receta";
 import { handleApiRequest } from "./RequestApi";
 
 const endpoint: string = "receta";
@@ -22,3 +22,8 @@ export const putReceta = async (
 
 export const deleteReceta = async (id: number): Promise<RecetaResponse | null> =>
   handleApiRequest<RecetaResponse>("delete", `${endpoint}/${id}`);
+
+export const searchReceta = async (
+  query: RecetaSearch
+): Promise<RecetaResponse[] | null> =>
+  handleApiRequest<RecetaResponse[]>("post", `${endpoint}/buscar`, query)
