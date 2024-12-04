@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import styles from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 const RegisterScreen: React.FC = () => {
   const [usuario, setUsuario] = useState('');
@@ -10,6 +11,7 @@ const RegisterScreen: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigation = useNavigation<any>();
 
   const handleRegister = () => {
     if (!email.includes('@')) {
@@ -24,6 +26,10 @@ const RegisterScreen: React.FC = () => {
 
     // Aquí puedes manejar la lógica para registrar al usuario
     alert('Usuario registrado con éxito.');
+  };
+
+  const goToLogin = () => {
+    navigation.navigate('Login'); // Redirige a la ventana de Login
   };
 
   return (
@@ -88,7 +94,7 @@ const RegisterScreen: React.FC = () => {
       </TouchableOpacity>
 
       {/* Enlace para iniciar sesión */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={goToLogin}>
         <Text style={styles.loginLink}>Iniciar Sesión</Text>
       </TouchableOpacity>
     </View>
