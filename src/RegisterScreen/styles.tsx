@@ -36,7 +36,7 @@ export default StyleSheet.create({
   registerButton: {
     width: '100%',
     height: 50,
-    backgroundColor: '#9A031E', // Botón guindo como en login
+    backgroundColor: '#7B0D44', // Color guindo para el botón
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',

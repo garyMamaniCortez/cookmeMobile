@@ -1,89 +1,94 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import { useNavigation } from '@react-navigation/native';
 
 const RegisterScreen: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [usuario, setUsuario] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const navigation = useNavigation<any>();
-
-  // Validar formato de correo
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const handleRegister = () => {
-    if (username && email && password && confirmPassword) {
-      if (!isValidEmail(email)) {
-        Alert.alert('Error', 'Por favor, ingrese un correo válido');
-        return;
-      }
-
-      if (password === confirmPassword) {
-        Alert.alert('Éxito', 'Cuenta creada exitosamente');
-        navigation.navigate('Login');
-      } else {
-        Alert.alert('Error', 'Las contraseñas no coinciden');
-      }
-    } else {
-      Alert.alert('Error', 'Por favor, completa todos los campos');
+    if (!email.includes('@')) {
+      alert('Por favor, introduce un correo electrónico válido.');
+      return;
     }
-  };
 
-  const goToLogin = () => {
-    navigation.navigate('Login');
+    if (password !== confirmPassword) {
+      alert('Las contraseñas no coinciden.');
+      return;
+    }
+
+    // Aquí puedes manejar la lógica para registrar al usuario
+    alert('Usuario registrado con éxito.');
   };
 
   return (
     <View style={styles.container}>
       <StatusBar style="light" backgroundColor="transparent" translucent />
+
       <Text style={styles.title}>COOKME</Text>
 
+      {/* Campo de usuario */}
       <Text style={styles.label}>USUARIO</Text>
       <TextInput 
         style={styles.input}
-        placeholder="Ejemplo: cocinero123"
-        placeholderTextColor="#AAA"
-        onChangeText={setUsername}
+        placeholder="Ingrese su Usuario"
+        onChangeText={setUsuario}
       />
 
+      {/* Campo de nombre */}
+      <Text style={styles.label}>NOMBRE</Text>
+      <TextInput 
+        style={styles.input}
+        placeholder="Ingrese su Nombre"
+        onChangeText={setNombre}
+      />
+
+      {/* Campo de apellido */}
+      <Text style={styles.label}>APELLIDO</Text>
+      <TextInput 
+        style={styles.input}
+        placeholder="Ingrese su Apellido"
+        onChangeText={setApellido}
+      />
+
+      {/* Campo de correo */}
       <Text style={styles.label}>CORREO</Text>
       <TextInput 
         style={styles.input}
-        placeholder="Ejemplo: usuario@email.com"
-        placeholderTextColor="#AAA"
-        keyboardType="email-address"
+        placeholder="ejemplo@correo.com"
         onChangeText={setEmail}
       />
 
+      {/* Campo de contraseña */}
       <Text style={styles.label}>CONTRASEÑA</Text>
       <TextInput 
         style={styles.input}
         placeholder="Ingrese una contraseña"
-        placeholderTextColor="#AAA"
         secureTextEntry
         onChangeText={setPassword}
       />
 
+      {/* Campo para repetir la contraseña */}
       <Text style={styles.label}>CONTRASEÑA</Text>
       <TextInput 
         style={styles.input}
         placeholder="Repita la contraseña"
-        placeholderTextColor="#AAA"
         secureTextEntry
         onChangeText={setConfirmPassword}
       />
 
+      {/* Botón Crear Cuenta */}
       <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
         <Text style={styles.registerButtonText}>Crear Cuenta</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={goToLogin}>
+      {/* Enlace para iniciar sesión */}
+      <TouchableOpacity>
         <Text style={styles.loginLink}>Iniciar Sesión</Text>
       </TouchableOpacity>
     </View>
