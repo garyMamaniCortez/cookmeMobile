@@ -47,7 +47,7 @@ const HomeScreen: React.FC = () => {
               style={styles.mainCardImage} />
             <Text style={styles.cardTitle}>{data[0].nombre_receta}</Text>
             <View style={styles.cardStars}>
-              {Array(data[0].promedio_valoracion)
+              {Array(data[0].promedio_valoracion? data[0].promedio_valoracion : 5)
                 .fill(null)
                 .map((_, index) => (
                   <Ionicons key={index} name="star" size={20} color="#FFD700" />
