@@ -50,7 +50,7 @@ const SearchScreen: React.FC = () => {
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.grid}>
             {data && data.map((receta) => (
-              <RecipeCard key={receta.id_receta.toString()} receta={receta} />
+              <RecipeCard key={receta.id_receta.toString()} receta={receta} query={query!.query} />
             ))}
           </View>
         </ScrollView>

@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from './styles'; // Asegúrate de tener definidos los estilos necesarios
+import styles from './styles';
 import { RecetaResponse } from '@/interfaces/api/Receta';
 import { useNavigation } from '@react-navigation/native';
+import { usePostHistorialBusqueda } from '@/hooks/useHistorialBusqueda';
+import { Globals } from '@/constants/global';
 
 interface RecipeCardProps {
   receta: RecetaResponse;
+  query?: string
 }
 
-const RecipeCard: React.FC<RecipeCardProps> = ({ receta }) => {
+const RecipeCard: React.FC<RecipeCardProps> = ({ receta,  query }) => {
   const navigation = useNavigation<any>();
 
-  const goToRecipe = (id_receta : number) => {
+  const goToRecipe = async (id_receta : number) => {
+    if (query){
+      const historialBusqueda = {
+        id_usuario: Globals.id_usuario,
+        id_receta:  id_receta,
+        busqueda:   query
+      }
+      const { historialBusqueda:data, error } = await usePostHistorialBusqueda(historialBusqueda);
+    }
     navigation.navigate('Recipe', { id_receta});
   };
   return (
