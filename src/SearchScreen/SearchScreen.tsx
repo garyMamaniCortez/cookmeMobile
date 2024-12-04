@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, ScrollView, Text, FlatList } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
 import { Navbar, RecipeCard } from '@/components';
@@ -8,15 +8,23 @@ import { useSearch } from '@/hooks/useReceta';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import styles from './styles';
 import { RecetaSearch } from '@/interfaces/api/Receta';
+import { useHistorialBusqueda } from '@/hooks/useHistorialBusqueda';
+import { Globals } from '@/constants/global';
 
 const SearchScreen: React.FC = () => {
   const [searchText, setSearchText] = useState('');
   const [query, setQuery] = useState<RecetaSearch | null>(null);
   const { data, error } = useSearch(query!);
+  const { data:historial, error:historialError } = useHistorialBusqueda(Globals.id_usuario);
 
   const handleSearch = () => {
     setQuery({query:searchText});
     setSearchText('');
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchText('');
+    setQuery({ query: suggestion });
   };
 
   if (error) {
@@ -44,6 +52,23 @@ const SearchScreen: React.FC = () => {
             onChangeText={setSearchText} // Llama a la función handleSearch cuando cambia el texto
             onSubmitEditing={handleSearch}
           />
+          {searchText.length > 0 && historial &&(
+              <FlatList
+                data={historial!.filter((item) =>
+                  item.busqueda.toLowerCase().includes(searchText.toLowerCase())
+                )}
+                keyExtractor={(_, index) => index.toString()}
+                style={styles.suggestionList}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.suggestionItem}
+                    onPress={() => handleSuggestionClick(item.busqueda)}
+                  >
+                    <Text>{item.busqueda}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+            )}
         </View>
 
         {/* Scrollable Content */}

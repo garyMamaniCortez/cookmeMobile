@@ -70,4 +70,19 @@ export default StyleSheet.create({
     paddingBottom: 70, // Espaciado inferior para evitar solapamiento con la barra de navegación
     alignItems: 'center', // Centra las tarjetas en el eje horizontal
   },
+  suggestionList: {
+    position: 'absolute',
+    top: 40,
+    left: 30,
+    right: 0,
+    backgroundColor: '#FFF',
+    borderRadius: 20,
+    elevation: 5,
+    zIndex: 1000,
+  },
+  suggestionItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#DDD',
+  },
 });
