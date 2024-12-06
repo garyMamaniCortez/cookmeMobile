@@ -21,11 +21,11 @@ const Navbar: React.FC = () => {
             size={28} 
             color={activeTab === 'Home' ? "#9C4C16": '#1D1B20'} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handlePress('Tendency')}>
+        <TouchableOpacity onPress={() => handlePress('Search')}>
           <Ionicons
             name="search-outline" 
             size={28} 
-            color={activeTab === 'Tendency' ? "#FB8B24": "#1D1B20"} />
+            color={activeTab === 'Search' ? "#FB8B24": "#1D1B20"} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handlePress('Add')}>
           <MaterialIcons 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, Alert, } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import styles from './styles';
@@ -10,6 +10,8 @@ import { useUsuario } from '@/hooks/useUsuario';
 import { UsuarioResponse } from '@/interfaces/api/User';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import { useNavigation } from '@react-navigation/native';
+import { usePostValoracion } from '@/hooks/useValoracion';
+import { Globals } from '@/constants/global';
 
 const RecipeScreen: React.FC< {route: any} > = ({route}) => {
     const [id_receta, setIdReceta] = useState<number>(1);
@@ -22,6 +24,9 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
     const [ ingredientesLista, setIngredientesLista ] = useState<string[]>();
     const [isSaved, setIsSaved] = useState(false);
     const [isHeartLiked, setIsHeartLiked] = useState(false);
+    const [selectedRating, setSelectedRating] = useState<number>(0);
+    const [isRatingSubmitted, setIsRatingSubmitted] = useState<boolean>(false);
+
     useEffect(() => {
         setIdReceta(route.params.id_receta);
         setReceta(data);
@@ -36,6 +41,7 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
             const ingredientes = list(receta?.instrucciones!);
             setInstruccionesLista(instrucciones);
             setIngredientesLista(ingredientes);
+            setSelectedRating(receta.promedio_valoracion!);
         }
     },[receta]);
     const renderList = (item:string) => {
@@ -54,6 +60,35 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
     }
     const goBack = () => {
         navigation.navigate('Home');
+    };
+    const handleStarPress = async (rating: number) => {
+        if (Globals.email){
+            setSelectedRating(rating);
+            const val = {
+                id_receta:  id_receta,
+                id_usuario: Globals.id_usuario,
+                valoracion: rating
+            };
+            const {valoracion, error} = await usePostValoracion(val);
+            if(valoracion)
+                setIsRatingSubmitted(true);
+        }else{
+            Alert.alert(
+                "Sesión requerida",
+                "Necesitas iniciar sesión para continuar.",
+                [
+                  {
+                    text: "Cancelar",
+                    style: "cancel",
+                  },
+                  {
+                    text: "Ir a Login",
+                    onPress: () => navigation.navigate('Login'),
+                  },
+                ],
+                { cancelable: false }
+              );
+        }
     };
 
     if(receta && usuario){
@@ -83,10 +118,18 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
                 <View style={styles.subHeader}>
                     <Text style={styles.subtitle}>Por: {usuario?.nombre_usuario}</Text>
                     <View style={styles.stars}>
-                        {Array(5)
-                        .fill(null)
-                        .map((_, index) => (
-                            <Ionicons key={index} name="star" size={20} color="#FFD700" />
+                        {[1, 2, 3, 4, 5].map((rating) => (
+                            <TouchableOpacity
+                            key={rating}
+                            onPress={() => handleStarPress(rating)}
+                            disabled={isRatingSubmitted} // Deshabilitar si ya se envió la valoración
+                            >
+                            <Ionicons
+                                name="star"
+                                size={20}
+                                color={rating <= (selectedRating || receta.promedio_valoracion!) ? "#FFD700" : "#CCC"}
+                            />
+                            </TouchableOpacity>
                         ))}
                     </View>
                 </View>

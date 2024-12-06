@@ -1,5 +1,5 @@
-import { getReceta, getRecetas, postReceta, putReceta } from '@/api/Receta';
-import { RecetaRequest, RecetaResponse } from '@/interfaces/api/Receta';
+import { getReceta, getRecetas, postReceta, putReceta, searchReceta } from '@/api/Receta';
+import { RecetaRequest, RecetaResponse, RecetaSearch } from '@/interfaces/api/Receta';
 import { useDataLoader, useDataUploader } from './useData';
 
 export const useReceta = (id: number) =>
@@ -38,4 +38,11 @@ export const useUserResponseToRequest = (recipe: RecetaResponse): RecetaRequest 
         id_categoria: recipe.id_categoria,
         id_usuario: recipe.id_usuario,
     };
+};
+
+export const useSearch = (query: RecetaSearch) => {
+  return useDataLoader(
+    () => searchReceta(query),
+    [query]
+  );
 };
