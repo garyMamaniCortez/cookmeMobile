@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, Alert, } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import styles from './styles';
@@ -62,15 +62,33 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
         navigation.navigate('Home');
     };
     const handleStarPress = async (rating: number) => {
-        setSelectedRating(rating);
-        const val = {
-            id_receta:  id_receta,
-            id_usuario: Globals.id_usuario,
-            valoracion: rating
-        };
-        const {valoracion, error} = await usePostValoracion(val);
-        if(valoracion)
-            setIsRatingSubmitted(true);
+        if (Globals.email){
+            setSelectedRating(rating);
+            const val = {
+                id_receta:  id_receta,
+                id_usuario: Globals.id_usuario,
+                valoracion: rating
+            };
+            const {valoracion, error} = await usePostValoracion(val);
+            if(valoracion)
+                setIsRatingSubmitted(true);
+        }else{
+            Alert.alert(
+                "Sesión requerida",
+                "Necesitas iniciar sesión para continuar.",
+                [
+                  {
+                    text: "Cancelar",
+                    style: "cancel",
+                  },
+                  {
+                    text: "Ir a Login",
+                    onPress: () => navigation.navigate('Login'),
+                  },
+                ],
+                { cancelable: false }
+              );
+        }
     };
 
     if(receta && usuario){

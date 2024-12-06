@@ -27,33 +27,55 @@ const AddRecipeUpScreen: React.FC = () => {
   const {data, error} = useCategorias();
 
   const handleSubmit = async () => {
-    if (!name || !ingredients || !prepTime || !cookTime || !steps) {
-      Alert.alert('Error', 'Por favor, completa todos los campos.');
-      return;
+    if (Globals.email){
+      if (!name || !ingredients || !prepTime || !cookTime || !steps) {
+        Alert.alert('Error', 'Por favor, completa todos los campos.');
+        return;
+      }
+  
+      const newRecipe:RecetaRequest = {
+        nombre_receta: name,
+        descripcion: description,
+        instrucciones: steps,
+        tiempo_preparacion: parseInt(prepTime, 10),
+        tiempo_coccion: parseInt(cookTime, 10),
+        imagen: "https://assets.afcdn.com/recipe/20210416/119490_w2048h1536c1cx363cy240.jpg", //modificar esto
+        id_categoria: parseInt(category[0]), // modificar esto
+        id_usuario: Globals.id_usuario
+      };
+  
+      setName('');
+      setIngredients('');
+      setDescription('');
+      setPrepTime('');
+      setCookTime('');
+      setSteps('');
+      setCategory([]);
+      setImageUri(null);
+      const {receta, error} = await usePostReceta(newRecipe);
+      if(receta)
+        Alert.alert("Exito","La receta se subio con exito");
+      else
+        Alert.alert(":(","Algo salio mal");
+
+      navigation.navigate('Home');
+    }else{
+      Alert.alert(
+        "Sesión requerida",
+        "Necesitas iniciar sesión para continuar.",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "Ir a Login",
+            onPress: () => navigation.navigate('Login'),
+          },
+        ],
+        { cancelable: false }
+      );
     }
-
-    const newRecipe:RecetaRequest = {
-      nombre_receta: name,
-      descripcion: description,
-      instrucciones: steps,
-      tiempo_preparacion: parseInt(prepTime, 10),
-      tiempo_coccion: parseInt(cookTime, 10),
-      imagen: "https://assets.afcdn.com/recipe/20210416/119490_w2048h1536c1cx363cy240.jpg", //modificar esto
-      id_categoria: parseInt(category[0]), // modificar esto
-      id_usuario: Globals.id_usuario
-    };
-
-    
-    setName('');
-    setIngredients('');
-    setDescription('');
-    setPrepTime('');
-    setCookTime('');
-    setSteps('');
-    setCategory([]);
-    setImageUri(null);
-    const {receta, error} = await usePostReceta(newRecipe);
-    navigation.navigate('Home');
   };
   if(data)
   return (

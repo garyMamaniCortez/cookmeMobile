@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './Styles';
@@ -41,27 +41,44 @@ const CommentsScreen: React.FC<{ route: any }> = ({route}) => {
   };
 
   const addComment = async () => {
-    if (newComment.trim()) {
-      const newCommentObj: ComentarioRequest = {
-        id_receta:  id_receta,
-        id_usuario: Globals.id_usuario,
-        comentario: newComment,
-      };
-      const newCommentObject: ComentarioResponse = {
-        id_comentario: 0,
-        id_receta:  id_receta,
-        id_usuario: Globals.id_usuario,
-        comentario: newComment,
-        fecha: new Date(),
-        usuario: {nombre_usuario: Globals.nombre_usuario}
+    if(newComment.trim())
+      if (Globals.email) {
+        const newCommentObj: ComentarioRequest = {
+          id_receta:  id_receta,
+          id_usuario: Globals.id_usuario,
+          comentario: newComment,
+        };
+        const newCommentObject: ComentarioResponse = {
+          id_comentario: 0,
+          id_receta:  id_receta,
+          id_usuario: Globals.id_usuario,
+          comentario: newComment,
+          fecha: new Date(),
+          usuario: {nombre_usuario: Globals.nombre_usuario}
+        }
+        const {comentario, error } = await usePostComentario(newCommentObj);
+        comentarios?.push(newCommentObject);
+        if(error){
+          alert(newCommentObj.id_receta);
+        }
+      }else{
+        Alert.alert(
+          "Sesión requerida",
+          "Necesitas iniciar sesión para continuar.",
+          [
+            {
+              text: "Cancelar",
+              style: "cancel",
+            },
+            {
+              text: "Ir a Login",
+              onPress: () => navigation.navigate('Login'),
+            },
+          ],
+          { cancelable: false }
+        );
       }
-      const {comentario, error } = await usePostComentario(newCommentObj);
-      comentarios?.push(newCommentObject);
-      if(error){
-        alert(newCommentObj.id_receta);
-      }
-      setNewComment('');  // Limpiamos el campo de texto
-    }
+    setNewComment('');
   };
 
   return (
