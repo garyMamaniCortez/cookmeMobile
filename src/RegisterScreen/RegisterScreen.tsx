@@ -1,8 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
+import { usePostUsuario } from '@/hooks/useUsuario';
+import { UsuarioRequest } from '@/interfaces/api/User';
+import { updateGlobals } from '@/constants/global';
 
 const RegisterScreen: React.FC = () => {
   const [usuario, setUsuario] = useState('');
@@ -13,19 +16,58 @@ const RegisterScreen: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigation = useNavigation<any>();
 
-  const handleRegister = () => {
-    if (!email.includes('@')) {
+  const emailRegex:RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const nameRegex: RegExp = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]{2,}(?: [a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]+)*$/;
+
+  const isValidEmail = (email: string): boolean => {
+    return emailRegex.test(email);
+  }
+  const isValidName = (name: string): boolean => {
+    return nameRegex.test(name);
+  }
+  const handleRegister = async() => {
+    if (!isValidEmail(email)) {
       alert('Por favor, introduce un correo electrónico válido.');
       return;
     }
-
-    if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden.');
+    if (!isValidName(nombre)) {
+      alert('Por favor, introduce un nombre valido.');
       return;
     }
+    if (!isValidName(apellido)) {
+      alert('Por favor, introduce un Apellido valido.');
+      return;
+    }
+    if (!usuario && usuario.trim() ==''){
+      Alert.alert('cagas');
+      return
+    }
 
-    // Aquí puedes manejar la lógica para registrar al usuario
-    alert('Usuario registrado con éxito.');
+    if (password && password.trim() !== ''){
+      if (password !== confirmPassword) {
+        alert('Las contraseñas no coinciden.');
+        return;
+      }else{
+        const newUsuario:UsuarioRequest = {
+          nombre_usuario: usuario,
+          nombre:         nombre,
+          apellido:       apellido,
+          email:          email,
+          password:       password
+        };
+        const { usuario:data, error } = await usePostUsuario(newUsuario);
+        if(error)
+          Alert.alert(error)
+        else{
+          Alert.alert('Usuario registrado con éxito.');
+          updateGlobals(data!);
+          navigation.navigate('Home');
+        }
+      }
+    }else{
+      Alert.alert('Error','Porfavor introduce una contraseña valida');
+      return;
+    }
   };
 
   const goToLogin = () => {
