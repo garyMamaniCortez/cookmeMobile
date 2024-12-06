@@ -16,59 +16,67 @@ const RegisterScreen: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigation = useNavigation<any>();
 
-  const emailRegex:RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const nameRegex: RegExp = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]{2,}(?: [a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]+)*$/;
 
-  const isValidEmail = (email: string): boolean => {
-    return emailRegex.test(email);
-  }
-  const isValidName = (name: string): boolean => {
-    return nameRegex.test(name);
-  }
-  const handleRegister = async() => {
+  const isValidEmail = (email: string): boolean => emailRegex.test(email);
+  const isValidName = (name: string): boolean => nameRegex.test(name);
+
+  const handleRegister = async () => {
     if (!isValidEmail(email)) {
-      alert('Por favor, introduce un correo electrónico válido.');
+      Alert.alert('Error', 'Por favor, introduce un correo electrónico válido.');
       return;
-    }
-    if (!isValidName(nombre)) {
-      alert('Por favor, introduce un nombre valido.');
-      return;
-    }
-    if (!isValidName(apellido)) {
-      alert('Por favor, introduce un Apellido valido.');
-      return;
-    }
-    if (!usuario && usuario.trim() ==''){
-      Alert.alert('cagas');
-      return
     }
 
-    if (password && password.trim() !== ''){
-      if (password !== confirmPassword) {
-        alert('Las contraseñas no coinciden.');
-        return;
-      }else{
-        const newUsuario:UsuarioRequest = {
-          nombre_usuario: usuario,
-          nombre:         nombre,
-          apellido:       apellido,
-          email:          email,
-          password:       password
-        };
-        const { usuario:data, error } = await usePostUsuario(newUsuario);
-        if(error)
-          Alert.alert(error)
-        else{
-          Alert.alert('Usuario registrado con éxito.');
-          updateGlobals(data!);
-          navigation.navigate('Home');
-        }
-      }
-    }else{
-      Alert.alert('Error','Porfavor introduce una contraseña valida');
+    if (!isValidName(nombre)) {
+      Alert.alert('Error', 'Por favor, introduce un nombre válido.');
       return;
     }
-  };
+
+    if (!isValidName(apellido)) {
+      Alert.alert('Error', 'Por favor, introduce un apellido válido.');
+      return;
+    }
+
+    if (!usuario || usuario.trim() === '') {
+      Alert.alert('Error', 'Por favor, introduce un nombre de usuario válido.');
+      return;
+    }
+
+    if (password.length < 8) {
+      Alert.alert('Error', 'La contraseña debe tener al menos 8 caracteres.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'Las contraseñas no coinciden.');
+      return;
+    }
+
+    // Creación del nuevo usuario
+    const newUsuario: UsuarioRequest = {
+      nombre_usuario: usuario.trim(),
+      nombre: nombre.trim(),
+      apellido: apellido.trim(),
+      email: email.trim(),
+      password: password.trim(),
+    };
+
+    try {
+      const { usuario: data, error } = await usePostUsuario(newUsuario);
+
+      if (error) {
+        Alert.alert('Error', error);
+      } else {
+        Alert.alert('Éxito', 'Usuario registrado con éxito.');
+        updateGlobals(data!);
+        navigation.navigate('Home');
+      }
+    } catch (err) {
+      Alert.alert('Error', 'Ocurrió un problema durante el registro.');
+    }
+};
+
 
   const goToLogin = () => {
     navigation.navigate('Login'); // Redirige a la ventana de Login
