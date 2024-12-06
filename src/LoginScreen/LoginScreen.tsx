@@ -12,38 +12,43 @@ const LoginScreen: React.FC = () => {
   const [password, setPassword] = useState('');
   const navigation = useNavigation<any>();
 
-  const handleSubmit = async() => {
-    if(email && password){
-      const user: UsuarioLogin = {email, password};
-      const {usuario, error} = await useLogin(user);
-      if(error){
-        alert(error)
-      }else{
+  const handleSubmit = async () => {
+    if (email && password) {
+      const user: UsuarioLogin = { email, password };
+      const { usuario, error } = await useLogin(user);
+      if (error) {
+        alert(error);
+      } else {
         updateGlobals(usuario!);
-        navigation.navigate('Home');
+        navigation.navigate('Home'); // Redirige a la pantalla Home
       }
     }
-  }
-  
+  };
+
+  const goToRegister = () => {
+    navigation.navigate('Register'); // Redirige a la pantalla de registro
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" backgroundColor="transparent" translucent />
       <Text style={styles.title}>COOKME</Text>
       <Image source={require('@/assets/mouse.jpg')} style={styles.image} />
-      
+
       <Text style={styles.label}>EMAIL</Text>
-      <TextInput 
+      <TextInput
         style={styles.input}
         placeholder="Ingrese su Email"
         onChangeText={setEmail}
-        />
+      />
 
       <Text style={styles.label}>CONTRASEÑA</Text>
-      <TextInput 
+      <TextInput
         style={styles.input}
         placeholder="Ingrese su contraseña"
         onChangeText={setPassword}
-        secureTextEntry />
+        secureTextEntry
+      />
 
       <TouchableOpacity style={styles.loginButton} onPress={handleSubmit}>
         <Text style={styles.loginButtonText}>Ingresar</Text>
@@ -53,12 +58,14 @@ const LoginScreen: React.FC = () => {
         <Text style={styles.forgotPassword}>OLVIDE LA CONTRASEÑA</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      {/* Botón para ir a la pantalla de registro */}
+      <TouchableOpacity onPress={goToRegister}>
         <Text style={styles.register}>Registrarse</Text>
       </TouchableOpacity>
-      
+
       <StatusBar style="auto" />
     </View>
   );
-}
+};
+
 export default LoginScreen;
