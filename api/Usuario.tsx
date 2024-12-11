@@ -1,4 +1,4 @@
-import { UsuarioLogin, UsuarioRequest, UsuarioResponse } from "@/interfaces/api/User";
+import { NotificacionRequest, UsuarioLogin, UsuarioRequest, UsuarioResponse } from "@/interfaces/api/User";
 import { handleApiRequest } from "./RequestApi";
 
 const endpoint: string = "usuario";
@@ -27,3 +27,6 @@ export const postLogin = async (
   usuario: UsuarioLogin
 ): Promise<UsuarioResponse | null> =>
   handleApiRequest<UsuarioResponse>("post", "login", usuario);
+
+export const getNotificaciones = async (id: number): Promise<NotificacionRequest[] | null> =>
+  handleApiRequest<NotificacionRequest[]>("get", `notificaciones/${id}`);
