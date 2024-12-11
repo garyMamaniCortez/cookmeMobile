@@ -23,7 +23,7 @@ const NotificationScreen: React.FC = () => {
             colors={['transparent', '#F6DBC5']}
             style={styles.container} >
             <StatusBar style="dark" backgroundColor="transparent" translucent={false} />
-              <View>
+              <View style={{ paddingBottom: 40}}>
                 {notificaciones.length === 0 ? (
                   <Text style={{ textAlign: 'center', color: '#777', marginTop: 40 }}>
                     No tienes notificaciones todavia
