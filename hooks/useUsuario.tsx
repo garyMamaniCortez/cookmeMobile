@@ -1,5 +1,5 @@
-import { getUsuario, getUsuarios, postLogin, postUsuario, putUsuario } from '@/api/Usuario';
-import { UsuarioLogin, UsuarioRequest, UsuarioResponse } from '@/interfaces/api/User';
+import { getNotificaciones, getUsuario, getUsuarios, postLogin, postUsuario, putUsuario } from '@/api/Usuario';
+import { Notificaciones, NotificacionRequest, UsuarioLogin, UsuarioRequest, UsuarioResponse } from '@/interfaces/api/User';
 import { useDataLoader, useDataUploader } from './useData';
 
 export const useUsuario = (id: number) =>
@@ -44,4 +44,35 @@ export const useUserResponseToRequest = (user: UsuarioResponse): UsuarioRequest 
     email: user.email,
     password: user.password,
   };
+};
+
+export const useNotificaciones = (id: number): Notificaciones[] => {
+  const { data, error } = useDataLoader<NotificacionRequest[]>(() => getNotificaciones(id), [id]);
+
+  if (error || !data) {
+    console.error("Error al cargar notificaciones", error);
+    return [];
+  }
+
+  const notificaciones: Notificaciones[] = data.flatMap((notificacion) => {
+    const comentarios = notificacion.comentarios.map((comentario) => ({
+      id: `comentario-${comentario.id_comentario}`,
+      usuario: `${comentario.usuario.nombre_usuario}`,
+      accion: ` comentó en `,
+      receta: `${notificacion.nombre_receta}`,
+      text: `: ${comentario.comentario}`,
+    }));
+
+    const valoraciones = notificacion.valoraciones.map((valoracion) => ({
+      id: `valoracion-${valoracion.id_valoracion}`,
+      usuario: `${valoracion.usuario.nombre_usuario}`,
+      accion: ` valoró tu receta `,
+      receta: `${notificacion.nombre_receta}`,
+      text: ` con ${valoracion.valoracion} estrellas`,
+    }));
+
+    return [...comentarios, ...valoraciones];
+  });
+
+  return notificaciones;
 };
