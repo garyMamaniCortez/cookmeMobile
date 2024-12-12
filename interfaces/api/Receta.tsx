@@ -1,10 +1,12 @@
+import { Asset } from "react-native-image-picker";
+
 export interface RecetaRequest {
     nombre_receta:      string;
     descripcion:        string;
     instrucciones:      string;
     tiempo_preparacion: number;
     tiempo_coccion:     number;
-    imagen:             string;
+    imagen?:            string;
     id_categoria:       number;
     id_usuario:         number;
 }

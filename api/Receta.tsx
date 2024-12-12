@@ -10,7 +10,7 @@ export const getRecetas = async (): Promise<RecetaResponse[] | null> =>
   handleApiRequest<RecetaResponse[]>("get", endpoint);
 
 export const postReceta = async (
-  receta: RecetaRequest
+  receta: FormData
 ): Promise<RecetaResponse | null> =>
   handleApiRequest<RecetaResponse>("post", endpoint, receta);
 
