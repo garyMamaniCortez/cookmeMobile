@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Alert, ScrollView } from 'react-native';
 import { FontAwesome6 } from '@expo/vector-icons';
 import styles from './styles';
@@ -9,8 +9,9 @@ import { Globals } from '@/constants/global';
 import { MultiSelect } from 'react-native-element-dropdown';
 import { useCategorias } from '@/hooks/useCategoria';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
-import { usePostReceta } from '@/hooks/useReceta';
+import { usePostReceta, useUserToFormData } from '@/hooks/useReceta';
 import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
 
 const AddRecipeUpScreen: React.FC = () => {
 
@@ -23,8 +24,21 @@ const AddRecipeUpScreen: React.FC = () => {
   const [cookTime, setCookTime] = useState<string>('');
   const [steps, setSteps] = useState('');
   const [category, setCategory] = useState<string[]>([]);
-  const [imageUri, setImageUri] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(null);
   const {data, error} = useCategorias();
+
+  const handleImagePicker = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      alert("La imagen se selecciono correctamente")
+    } else {
+      alert('No se selecciono ninguna imagen.');
+    }
+  };
 
   const handleSubmit = async () => {
     if (Globals.email){
@@ -39,10 +53,11 @@ const AddRecipeUpScreen: React.FC = () => {
         instrucciones: steps,
         tiempo_preparacion: parseInt(prepTime, 10),
         tiempo_coccion: parseInt(cookTime, 10),
-        imagen: "https://assets.afcdn.com/recipe/20210416/119490_w2048h1536c1cx363cy240.jpg", //modificar esto
+        imagen: image!,
         id_categoria: parseInt(category[0]), // modificar esto
         id_usuario: Globals.id_usuario
       };
+      const formData = useUserToFormData(newRecipe);
   
       setName('');
       setIngredients('');
@@ -51,8 +66,8 @@ const AddRecipeUpScreen: React.FC = () => {
       setCookTime('');
       setSteps('');
       setCategory([]);
-      setImageUri(null);
-      const {receta, error} = await usePostReceta(newRecipe);
+      setImage(null);
+      const {receta, error} = await usePostReceta(formData);
       if(receta)
         Alert.alert("Exito","La receta se subio con exito");
       else
@@ -105,7 +120,7 @@ const AddRecipeUpScreen: React.FC = () => {
           />
 
           {/* Cuadro para añadir imagen */}
-          <TouchableOpacity style={styles.imageBox}>
+          <TouchableOpacity style={styles.imageBox} onPress={() => handleImagePicker()}>
             <FontAwesome6 name="file-circle-plus" size={48} color="#777" />
             <Text style={styles.imageText}>Añadir Imagen</Text>
           </TouchableOpacity>
