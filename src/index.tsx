@@ -7,3 +7,4 @@ export { default as HomeScreen } from './HomeScreen/HomeScreen';
 export { default as RegisterScreen } from './RegisterScreen/RegisterScreen';
 export { default as SearchScreen} from './SearchScreen/SearchScreen';
 export { default as NotificationScreen} from './NotificationScreen/NotificationScreen';
+export { default as MyRecipesScreen } from './MyRecipesScreen/MyRecipesScreen'
