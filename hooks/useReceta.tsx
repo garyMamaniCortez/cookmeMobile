@@ -1,4 +1,4 @@
-import { getReceta, getRecetas, postReceta, putReceta, searchReceta } from '@/api/Receta';
+import { getReceta, getRecetas, getUserReceta, postReceta, putReceta, searchReceta } from '@/api/Receta';
 import { RecetaRequest, RecetaResponse, RecetaSearch } from '@/interfaces/api/Receta';
 import { useDataLoader, useDataUploader } from './useData';
 
@@ -6,6 +6,9 @@ const FormData = require('form-data');
 
 export const useReceta = (id: number) =>
   useDataLoader<RecetaResponse>(() => getReceta(id), [id]);
+
+export const useUserReceta = (id: number) =>
+  useDataLoader<RecetaResponse[]>(() => getUserReceta(id), [id]);
 
 export const useRecetas = () =>
   useDataLoader<RecetaResponse[]>(() => getRecetas(), []);

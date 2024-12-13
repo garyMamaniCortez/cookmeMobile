@@ -6,6 +6,9 @@ const endpoint: string = "receta";
 export const getReceta = async (id: number): Promise<RecetaResponse | null> =>
   handleApiRequest<RecetaResponse>("get", `${endpoint}/${id}`);
 
+export const getUserReceta = async (id: number): Promise<RecetaResponse[] | null> =>
+  handleApiRequest<RecetaResponse[]>("get", `${endpoint}/usuario/${id}`);
+
 export const getRecetas = async (): Promise<RecetaResponse[] | null> =>
   handleApiRequest<RecetaResponse[]>("get", endpoint);
 
