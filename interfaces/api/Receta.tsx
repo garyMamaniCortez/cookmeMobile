@@ -9,6 +9,7 @@ export interface RecetaRequest {
     imagen?:            string;
     id_categoria:       number;
     id_usuario:         number;
+    ingredientes:       string;
 }
 
 export interface RecetaResponse {

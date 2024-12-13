@@ -41,6 +41,7 @@ export const useUserResponseToRequest = (recipe: RecetaResponse): RecetaRequest 
         tiempo_coccion: recipe.tiempo_coccion,
         id_categoria: recipe.id_categoria,
         id_usuario: recipe.id_usuario,
+        ingredientes: ""
     };
 };
 
@@ -65,6 +66,7 @@ export const useUserToFormData = (recipe: RecetaRequest): FormData => {
     } as any);
     formData.append("id_categoria", recipe.id_categoria.toString());
     formData.append("id_usuario", recipe.id_usuario.toString());
+    formData.append("ingredientes", recipe.ingredientes);
   
     return formData;
 }

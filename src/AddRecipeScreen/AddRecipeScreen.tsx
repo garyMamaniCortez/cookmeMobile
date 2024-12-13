@@ -54,8 +54,9 @@ const AddRecipeUpScreen: React.FC = () => {
         tiempo_preparacion: parseInt(prepTime, 10),
         tiempo_coccion: parseInt(cookTime, 10),
         imagen: image!,
-        id_categoria: parseInt(category[0]), // modificar esto
-        id_usuario: Globals.id_usuario
+        id_categoria: parseInt(category[0]),
+        id_usuario: Globals.id_usuario,
+        ingredientes: ingredients
       };
       const formData = useUserToFormData(newRecipe);
   
