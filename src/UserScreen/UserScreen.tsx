@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import styles from './styles';
@@ -8,9 +8,11 @@ import { useUpdateUsuario, useUserResponseToRequest, useUsuario } from '@/hooks/
 import { UsuarioResponse } from '@/interfaces/api/User';
 import ErrorScreen from '../ErrorScreen/ErrorScreen';
 import { Globals } from '@/constants/global';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileScreen: React.FC = () => {
 
+  const navigation = useNavigation<any>();
   const { data, error } = useUsuario(Globals.id_usuario);
   const [ user, setUser ] = useState<UsuarioResponse| null>(null);
   const [editedUsername, setEditedUsername] = useState('');
@@ -26,6 +28,73 @@ const ProfileScreen: React.FC = () => {
     const {usuario, error } = await useUpdateUsuario(updatedUsuario.id_usuario, usuarioResquest);
     setUser(usuario);
   };
+
+  const goToMyRecipes = () => {
+    if (Globals.email)
+      navigation.navigate('MyRecipes');
+    else{
+      Alert.alert(
+        "Sesión requerida",
+        "Necesitas iniciar sesión para continuar.",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "Ir a Login",
+            onPress: () => navigation.navigate('Login'),
+          },
+        ],
+        { cancelable: false }
+      );
+    }
+  }
+
+  const goToFavorites = () => {
+    if (Globals.email){
+
+    }
+    else{
+      Alert.alert(
+        "Sesión requerida",
+        "Necesitas iniciar sesión para continuar.",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "Ir a Login",
+            onPress: () => navigation.navigate('Login'),
+          },
+        ],
+        { cancelable: false }
+      );
+    }
+  }
+  const goToSaves = () => {
+    if (Globals.email){
+      
+    }
+    else{
+      Alert.alert(
+        "Sesión requerida",
+        "Necesitas iniciar sesión para continuar.",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "Ir a Login",
+            onPress: () => navigation.navigate('Login'),
+          },
+        ],
+        { cancelable: false }
+      );
+    }
+  }
 
   if(user){
     return (
@@ -56,7 +125,7 @@ const ProfileScreen: React.FC = () => {
   
         {/* Cuadrícula de botones */}
         <View style={styles.grid}>
-          <TouchableOpacity style={styles.gridItem}>
+          <TouchableOpacity style={styles.gridItem} onPress={goToFavorites}>
             <Ionicons name="heart" size={32} color="1D1B20" />
             <Text 
               style={styles.gridText} 
@@ -67,7 +136,7 @@ const ProfileScreen: React.FC = () => {
             </Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.gridItem}>
+          <TouchableOpacity style={styles.gridItem} onPress={goToSaves}>
             <Ionicons name="bookmark" size={32} color="1D1B20" />
             <Text 
               style={styles.gridText} 
@@ -78,7 +147,7 @@ const ProfileScreen: React.FC = () => {
             </Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.gridItem}>
+          <TouchableOpacity style={styles.gridItem} onPress={goToMyRecipes}>
             <MaterialIcons name="restaurant-menu" size={32} color="#1D1B20" />
             <Text 
               style={styles.gridText} 
