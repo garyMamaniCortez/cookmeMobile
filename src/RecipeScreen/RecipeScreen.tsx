@@ -31,6 +31,7 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
         setIdReceta(route.params.id_receta);
         setReceta(data);
         setUsuario(user);
+        setIsRatingSubmitted(false);
     });
     useEffect(() => {
         if(receta){
@@ -38,7 +39,7 @@ const RecipeScreen: React.FC< {route: any} > = ({route}) => {
                 return text.split(',').map(item => item.trim());
             }
             const instrucciones = list(receta?.instrucciones!);
-            const ingredientes = list(receta?.instrucciones!);
+            const ingredientes = list(receta?.ingredientes!);
             setInstruccionesLista(instrucciones);
             setIngredientesLista(ingredientes);
             setSelectedRating(receta.promedio_valoracion!);

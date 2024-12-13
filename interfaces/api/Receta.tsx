@@ -23,6 +23,7 @@ export interface RecetaResponse {
     id_categoria:       number;
     id_usuario:         number;
     promedio_valoracion:number | null;
+    ingredientes:       string;
 }
 
 export interface RecetaSearch {
